@@ -7,6 +7,11 @@ public class Cards implements Serializable {
     private String Tipo;
     private String Color;
 
+
+    /***
+     * metodo para cambiar el color del objeto
+     * @param color
+     */
     public void setColor(String color) {
         Color = color;
     }
