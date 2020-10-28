@@ -1,4 +1,4 @@
-package tec.monster.graphics.controllers.views;
+package tec.monster.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

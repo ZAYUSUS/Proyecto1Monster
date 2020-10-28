@@ -1,4 +1,4 @@
-package tec.monster.graphics.controllers.views;
+package tec.monster.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
