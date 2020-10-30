@@ -1,6 +1,6 @@
-package Menu;
+package tec.monster;
 
-import Menu.MenuInicial;
+import tec.monster.graphics.main_menu.MenuInicial;
 
 public class Main {
     public static void main(String[] args) {
