@@ -15,6 +15,8 @@ import java.util.ResourceBundle;
 
 
 public class Menucontroller implements Initializable {
+    Stage viewInvitado;
+    Stage viewAnfitrion;
     /**
      *
      * Clase que maneja los eventos y acciones realizadas en la ventana de la clase MenuInicial
@@ -47,11 +49,12 @@ public class Menucontroller implements Initializable {
         Parent root = loader.load();
 
         Invitadocontroller invitadocont = loader.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle("Conexión");
-        stage.show();
+        this.viewInvitado= new Stage();
+        //this.viewInvitado.initModality(Modality.APPLICATION_MODAL);
+        this.viewInvitado.setScene(new Scene(root));
+        this.viewInvitado.setResizable(false);
+        this.viewInvitado.setTitle("Conexión");
+        this.viewInvitado.show();
     }
 
     /**
@@ -64,18 +67,17 @@ public class Menucontroller implements Initializable {
      */
     @FXML
     private void ClickAnfitrion(ActionEvent evento) throws IOException {
-        //cargando la vista de la segunda ventana y obteniendo el controlador
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/tec/monster/graphics/views/Anfitrionview.fxml"));
         Parent root = loader2.load();
 
         Anfitrioncontroller anfitrioncont = loader2.getController();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle("Conexión");
-        stage.show();
+        this.viewAnfitrion = new Stage();
+        //this.viewAnfitrion.initModality(Modality.APPLICATION_MODAL);
+        this.viewAnfitrion.setScene(new Scene(root));
+        this.viewAnfitrion.setResizable(false);
+        this.viewAnfitrion.setTitle("Conexión");
+        this.viewAnfitrion.show();
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }

@@ -19,10 +19,12 @@
                </image>
             </ImageView>
             <Button fx:id="botonconectar" layoutX="148.0" layoutY="342.0" mnemonicParsing="false" onAction="#Conectar" style="-fx-background-color: #DB9C16; -fx-background-radius: 50; -fx-text-fill: white;" text="CONECTAR" />
-            <Label layoutX="138.0" layoutY="34.0" prefHeight="19.0" prefWidth="96.0" style="-fx-text-fill: #DB9C16; -fx-border-color: #DB9C16; -fx-border-radius: 0px 2px 0px 8px;" text=" INGRESE  LA IP" />
-            <Label layoutX="121.0" layoutY="149.0" prefHeight="19.0" prefWidth="131.0" style="-fx-text-fill: #DB9C16; -fx-border-color: #DB9C16; -fx-border-radius: 0px 2px 0px 8px;" text=" INGRESE  EL PUERTO" />
-            <TextField fx:id="eIP" layoutX="112.0" layoutY="87.0" style="-fx-background-color: #0ACF7A;" />
-            <TextField fx:id="ePuerto" layoutX="112.0" layoutY="200.0" style="-fx-background-color: #0ACF7A;" />
+            <Label alignment="CENTER" layoutX="138.0" layoutY="115.0" prefHeight="19.0" prefWidth="96.0" style="-fx-text-fill: #DB9C16; -fx-border-color: #DB9C16; -fx-border-radius: 0px 2px 0px 8px;" text=" INGRESE  LA IP" />
+            <Label alignment="CENTER" layoutX="121.0" layoutY="200.0" prefHeight="19.0" prefWidth="131.0" style="-fx-text-fill: #DB9C16; -fx-border-color: #DB9C16; -fx-border-radius: 0px 2px 0px 8px;" text=" INGRESE  EL PUERTO" />
+            <TextField fx:id="eIP" layoutX="112.0" layoutY="156.0" style="-fx-background-color: #0ACF7A;" />
+            <TextField fx:id="ePuerto" layoutX="112.0" layoutY="249.0" style="-fx-background-color: #0ACF7A;" />
+            <Label alignment="CENTER" layoutX="144.0" layoutY="41.0" prefHeight="19.0" prefWidth="96.0" style="-fx-text-fill: #DB9C16; -fx-border-color: #DB9C16; -fx-border-radius: 0px 2px 0px 8px;" text="NOMBRE" />
+            <TextField fx:id="eNombre" layoutX="118.0" layoutY="76.0" style="-fx-background-color: #0ACF7A;" />
          </children>
          <effect>
             <Blend />

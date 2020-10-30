@@ -2,12 +2,12 @@ package tec.monster.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import tec.monster.Observers.Observer;
 import tec.monster.connections.Server;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 /**
@@ -26,32 +26,31 @@ import java.util.ResourceBundle;
  * @since 1.0
  */
 
-public class Anfitrioncontroller implements Initializable,Observer {
-    Server servidor;
+public class Anfitrioncontroller extends Observer implements Initializable{
+    private Server servidor;
+    @FXML
+    private Button conectar;
     @FXML
     private TextArea statusarea;
 
-    /**
-     * Método encargado de instanciar la clase Server  e informar al statusarea el avance con la conexión
-     * También crea un hilo para correr el servidor esto habilita que se pueda correr sin interrumpir el hilo principal.
-     *
-     */
-    public void Inicializador(){
-        statusarea.appendText("Abriendo el server...\n");
-        servidor = new Server();
-        servidor.addObserver(this);
+    private void Inicializador(){
+        this.statusarea.appendText("Abriendo el server...\n");
+        this.servidor = new Server();
+        this.subject = servidor;
+        this.subject.add(this);
         Thread hilo = new Thread(servidor);
         hilo.start();
-        statusarea.appendText("Conectando...\n");
-        statusarea.appendText("Servidor escuchando en el puerto: "+servidor.getPort()+"\n");
-        statusarea.appendText("Esperando...\n");
-
+        this.statusarea.appendText("Conectando...\n");
+        this.statusarea.appendText("Servidor escuchando en el puerto: \n"+servidor.getPort()+"\n");
+        this.statusarea.appendText("Esperando...\n");
     }
 
     /**
      *
      * Se sobreescribe por la implementación de la interfaz Initializable, este método se corre cuando se presione el boton banfitrion de la
      * ventana de la clase MenuInicial.
+     * Método encargado de instanciar la clase Server  e informar al statusarea el avance con la conexión
+     * También crea un hilo para correr el servidor esto habilita que se pueda correr sin interrumpir el hilo principal.
      *
      * @param url
      * @param resourceBundle
@@ -64,11 +63,9 @@ public class Anfitrioncontroller implements Initializable,Observer {
     /**
      * Clase sobreescrita por la implementación de la interfaz Observer, permite recibir la notificaión
      * de cambio del objeto observado, en este caso el objeto observado es la el servidor.
-     * @param o
-     * @param arg
      */
     @Override
-    public void update(Observable o, Object arg) {
-        statusarea.appendText(servidor.getCarta().getColor());
+    public void update() {
+        statusarea.appendText("Se encontró una conexión "+servidor.getState().getUsuario());
     }
 }

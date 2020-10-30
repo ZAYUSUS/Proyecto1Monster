@@ -8,14 +8,14 @@ import javafx.stage.Stage;
 
 
 public class MenuInicial extends Application {
+    public static Stage firtsWindow;
 
     @Override
     public void start(Stage stage) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("../views/Menuview.fxml"));
+        this.firtsWindow = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("/tec/monster/graphics/views/Menuview.fxml"));
         stage.setTitle("Monster");
         stage.setResizable(false);
-
         Scene window = new Scene(root);
 
         stage.setScene(window);

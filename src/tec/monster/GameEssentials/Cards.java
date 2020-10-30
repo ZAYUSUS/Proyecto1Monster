@@ -3,6 +3,7 @@ package tec.monster.GameEssentials;
 import java.io.Serializable;
 
 public class Cards implements Serializable {
+    private String Usuario;
     private String Efecto;
     private String Tipo;
     private String Color;
@@ -22,6 +23,8 @@ public class Cards implements Serializable {
         this.Efecto = efecto;
     }
 
+    public void setUsuario(String usuario) { Usuario = usuario;}
+
     public String getColor() {
         return this.Color;
     }
@@ -31,4 +34,5 @@ public class Cards implements Serializable {
     public String getTipo() {
         return this.Tipo;
     }
+    public String getUsuario() { return Usuario; }
 }

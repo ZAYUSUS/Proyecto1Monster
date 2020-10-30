@@ -1,11 +1,12 @@
 package tec.monster.connections;
 import tec.monster.GameEssentials.Cards;
+import tec.monster.Observers.Subject;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Observable;
 
 /**
  * Clase encargada de crear el Serversocket para la conexión entre el Anfitrión y el invitado.
@@ -22,9 +23,10 @@ import java.util.Observable;
  * @author Bryan
  * @since 1.0
  */
-public class Server extends Observable implements Runnable {
-    int port ;
-    Cards carta;
+public class Server extends Subject implements Runnable {
+    private int port ;
+    private Cards carta;
+    private ServerSocket servidor = null;
 
     /***
      * Al Server ser instanciado se le otorga un numero de un puerto disponible para crear el ServerSocket dado por
@@ -68,7 +70,6 @@ public class Server extends Observable implements Runnable {
     public int getPort(){
         return this.port;
     }
-    public Cards getCarta(){ return this.carta;}
 
     /**
      * Crea el Serversocket y escucha en un puerto dado por el atributo port, luego crea un objeto de tipo inputstream que será el encargado
@@ -82,7 +83,6 @@ public class Server extends Observable implements Runnable {
      */
     @Override
     public void run() {
-        ServerSocket servidor = null;
         ObjectInputStream input;
 
 
@@ -91,27 +91,24 @@ public class Server extends Observable implements Runnable {
             System.out.println("Servidor Iniciado");
             servidor = new ServerSocket(port);
 
-            Cards cartas;
-
             while (true){
                 conexion = servidor.accept();
 
                 input = new ObjectInputStream(conexion.getInputStream());
+                carta = (Cards) input.readObject();
 
-                cartas = (Cards) input.readObject();
-                carta = cartas;
-
-                this.setChanged();
-                this.notifyObservers(cartas);
-                this.clearChanged();
+                this.setState(carta);
 
                 conexion.close();
                 System.out.println("Cliente desconectado");
                 }
             }catch (IOException a) {
-            System.out.println("Problema en el servidor");
+            System.out.println("Problema en el servidor "+ a);
             } catch (Exception e) {
-            System.out.println("Problema en el server");
-            }
+            System.out.println("Problema grave server");
+            }finally {
+            System.out.println("se acabo el bloque del server");
+        }
+
     }
 }
