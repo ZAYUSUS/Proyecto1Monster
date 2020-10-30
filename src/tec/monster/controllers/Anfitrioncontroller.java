@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import tec.monster.Observers.Observer;
+import tec.monster.connections.Client;
 import tec.monster.connections.Server;
 
 import java.io.IOException;
@@ -44,9 +45,16 @@ public class Anfitrioncontroller extends Observer implements Initializable{
     private TextArea statusarea;
 
     /**
-     *Método
+     *Método que abre la ventana del juego y envía una respuesta al cliente que envío la conexión
+     * para unirse a la ventana de juego.
      */
     public void Clickconectar(javafx.event.ActionEvent actionEvent) throws IOException {
+
+        Client cliente = new Client(servidor.getState().getPuerto(),"127.0.0.1","",servidor.getPort());
+        Thread hilo = new Thread(cliente);
+        hilo.start();
+
+
         final Node source = (Node) actionEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();

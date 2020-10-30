@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import tec.monster.connections.Server;
@@ -58,7 +57,6 @@ public class Menucontroller implements Initializable {
 
         Invitadocontroller invitadocont = loader.getController();
         this.viewInvitado= new Stage();
-        this.viewInvitado.initModality(Modality.APPLICATION_MODAL);
         this.viewInvitado.setScene(new Scene(root));
         this.viewInvitado.setResizable(false);
         this.viewInvitado.setTitle("Conexión");
@@ -66,6 +64,8 @@ public class Menucontroller implements Initializable {
         this.viewInvitado.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 stage.show();
+                Server servidor = invitadocont.getServer();
+                servidor.close();
             }
         });
     }

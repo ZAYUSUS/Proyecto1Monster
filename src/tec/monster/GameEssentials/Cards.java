@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Cards implements Serializable {
     private String Usuario;
+    private int puertoSalida;
     private String Efecto;
     private String Tipo;
     private String Color;
@@ -23,6 +24,10 @@ public class Cards implements Serializable {
         this.Efecto = efecto;
     }
 
+    public void setPuerto(int puerto) {
+        this.puertoSalida = puerto;
+    }
+
     public void setUsuario(String usuario) { Usuario = usuario;}
 
     public String getColor() {
@@ -35,4 +40,7 @@ public class Cards implements Serializable {
         return this.Tipo;
     }
     public String getUsuario() { return Usuario; }
+    public int getPuerto() {
+        return puertoSalida;
+    }
 }
