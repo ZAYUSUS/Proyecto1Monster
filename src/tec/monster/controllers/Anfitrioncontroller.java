@@ -61,6 +61,7 @@ public class Anfitrioncontroller extends Observer implements Initializable{
         Gameview.setResizable(false);
         Gameview.setTitle("Conexión");
         Gameview.show();
+        gamecont.setServer(servidor);
         Gameview.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 servidor.close();
@@ -107,7 +108,7 @@ public class Anfitrioncontroller extends Observer implements Initializable{
      */
     @Override
     public void update() {
-        statusarea.appendText("Se encontró una conexión "+servidor.getState().getUsuario());
+        statusarea.appendText("Se encontró una conexión de "+servidor.getState().getUsuario());
         conectar.setVisible(true);
     }
 
