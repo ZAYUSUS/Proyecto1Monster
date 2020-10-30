@@ -71,6 +71,17 @@ public class Server extends Subject implements Runnable {
         return this.port;
     }
 
+    public void close() {
+        try{
+            servidor.close();
+        }catch (IOException a){
+            System.out.println("Hubo un problema cerrando el servidor");
+        }finally {
+            System.out.println("Se cerro el servidor");
+        }
+
+    }
+
     /**
      * Crea el Serversocket y escucha en un puerto dado por el atributo port, luego crea un objeto de tipo inputstream que será el encargado
      * de guardar los objetos que sean recibidos y luego los deserializa para enviarlos a otra clase.

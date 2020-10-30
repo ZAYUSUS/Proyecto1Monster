@@ -34,6 +34,7 @@ public class Invitadocontroller implements Initializable {
         hilo.start();
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         eIP.setText("127.0.0.1");

@@ -1,12 +1,21 @@
 package tec.monster.controllers;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import tec.monster.Observers.Observer;
 import tec.monster.connections.Server;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,21 +37,44 @@ import java.util.ResourceBundle;
 
 public class Anfitrioncontroller extends Observer implements Initializable{
     private Server servidor;
+    private Stage Gameview;
     @FXML
     private Button conectar;
     @FXML
     private TextArea statusarea;
 
-    private void Inicializador(){
-        this.statusarea.appendText("Abriendo el server...\n");
-        this.servidor = new Server();
-        this.subject = servidor;
-        this.subject.add(this);
-        Thread hilo = new Thread(servidor);
-        hilo.start();
-        this.statusarea.appendText("Conectando...\n");
-        this.statusarea.appendText("Servidor escuchando en el puerto: \n"+servidor.getPort()+"\n");
-        this.statusarea.appendText("Esperando...\n");
+    /**
+     *Método
+     */
+    public void Clickconectar(javafx.event.ActionEvent actionEvent) throws IOException {
+        final Node source = (Node) actionEvent.getSource();
+        final Stage stage = (Stage) source.getScene().getWindow();
+        stage.hide();
+
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/tec/monster/graphics/views/Gameview.fxml"));
+        Parent root = loader2.load();
+
+        Gameviewcontroller gamecont = loader2.getController();
+        Gameview = new Stage();
+        Gameview.initModality(Modality.APPLICATION_MODAL);
+        Gameview.setScene(new Scene(root));
+        Gameview.setResizable(false);
+        Gameview.setTitle("Conexión");
+        Gameview.show();
+        Gameview.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                servidor.close();
+                stage.show();
+            }
+        });
+    }
+    /**
+     * Método que se encarfa de retornar el servidor que se está usando.
+     *
+     * @return servidor para poder acceder a los diferentes métodos del ServerSocket desde otras clases
+     */
+    public Server getServidor() {
+        return servidor;
     }
 
     /**
@@ -57,7 +89,16 @@ public class Anfitrioncontroller extends Observer implements Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Inicializador();
+        conectar.setVisible(false);
+        this.statusarea.appendText("Abriendo el server...\n");
+        this.servidor = new Server();
+        this.subject = servidor;
+        this.subject.add(this);
+        Thread hilo = new Thread(servidor);
+        hilo.start();
+        this.statusarea.appendText("Conectando...\n");
+        this.statusarea.appendText("Servidor escuchando en el puerto: \n"+servidor.getPort()+"\n");
+        this.statusarea.appendText("Esperando...\n");
     }
 
     /**
@@ -67,5 +108,8 @@ public class Anfitrioncontroller extends Observer implements Initializable{
     @Override
     public void update() {
         statusarea.appendText("Se encontró una conexión "+servidor.getState().getUsuario());
+        conectar.setVisible(true);
     }
+
+
 }
