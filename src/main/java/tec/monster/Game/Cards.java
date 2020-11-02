@@ -1,15 +1,15 @@
 package tec.monster.Game;
 
+import javafx.scene.control.Button;
+
 import java.io.Serializable;
 
-public class Cards implements Serializable {
+public class Cards extends Button implements Serializable {
     private String Usuario;
     private int puertoSalida;
     private String Efecto;
     private String Tipo;
     private String Color;
-
-
     /***
      * metodo para cambiar el color del objeto
      * @param color

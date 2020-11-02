@@ -40,6 +40,7 @@ import java.util.ResourceBundle;
 public class Anfitrioncontroller extends Observer implements Initializable{
     private Server servidor;
     private Stage Gameview;
+    private String nickname;
     @FXML
     private Button conectar;
     @FXML
@@ -51,7 +52,7 @@ public class Anfitrioncontroller extends Observer implements Initializable{
      */
     public void Clickconectar(javafx.event.ActionEvent actionEvent) throws IOException {
 
-        Client cliente = new Client(servidor.getState().getPuerto(),"127.0.0.1","",servidor.getPort());
+        Client cliente = new Client(servidor.getState().getPuerto(),"127.0.0.1",nickname,servidor.getPort());
         Thread hilo = new Thread(cliente);
         hilo.start();
 
@@ -69,8 +70,9 @@ public class Anfitrioncontroller extends Observer implements Initializable{
         Gameview.setScene(new Scene(root));
         Gameview.setResizable(false);
         Gameview.setTitle("Conexión");
-        Gameview.show();
         gamecont.setServer(servidor);
+        gamecont.setNickname(nickname);
+        Gameview.show();
         Gameview.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 servidor.close();
@@ -85,6 +87,9 @@ public class Anfitrioncontroller extends Observer implements Initializable{
      */
     public Server getServidor() {
         return servidor;
+    }
+    public void setNickname(String name){
+        this.nickname = name;
     }
 
     /**

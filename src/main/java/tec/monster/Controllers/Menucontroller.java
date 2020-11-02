@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -37,6 +38,8 @@ public class Menucontroller implements Initializable {
      */
     @FXML
     Button binvitado,banfitrion;
+    @FXML
+    public TextField nickname;
 
     /***
      * Este método inicializa la ventana para que el invitado dijite la ip y e puerto al cual conectarse, creando un
@@ -59,6 +62,7 @@ public class Menucontroller implements Initializable {
         Invitadocontroller invitadocont = loader.getController();
         this.viewInvitado= new Stage();
         this.viewInvitado.setScene(new Scene(root));
+        invitadocont.setNickname(nickname.getText());
         this.viewInvitado.setResizable(false);
         this.viewInvitado.setTitle("Conexión");
         this.viewInvitado.show();
@@ -90,6 +94,7 @@ public class Menucontroller implements Initializable {
         Anfitrioncontroller anfitrioncont = loader2.getController();
         this.viewAnfitrion = new Stage();
         this.viewAnfitrion.setScene(new Scene(root));
+        anfitrioncont.setNickname(nickname.getText());
         this.viewAnfitrion.setResizable(false);
         this.viewAnfitrion.setTitle("Conexión");
         this.viewAnfitrion.show();
@@ -101,6 +106,9 @@ public class Menucontroller implements Initializable {
 
             }
         });
+    }
+    public String getName(){
+        return nickname.getText();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

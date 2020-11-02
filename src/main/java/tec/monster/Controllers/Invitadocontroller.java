@@ -34,10 +34,11 @@ import java.util.ResourceBundle;
 public class Invitadocontroller extends Observer implements Initializable {
     private Server servidor;
     private Stage Gameview;
+    private String nickname;
     @FXML
     private Button botonconectar,botoniniciar;
     @FXML
-    private TextField eIP,ePuerto,eNombre;
+    private TextField eIP,ePuerto;
     @FXML
     private Label puertoCliente;
 
@@ -48,13 +49,17 @@ public class Invitadocontroller extends Observer implements Initializable {
      */
     @FXML
     public void Conectar(ActionEvent e){
+
         int puerto = Integer.parseInt(this.ePuerto.getText());
-        Client cliente = new Client(puerto,this.eIP.getText(),this.eNombre.getText(),servidor.getPort());
+        Client cliente = new Client(puerto,this.eIP.getText(),nickname,servidor.getPort());
         Thread hilo = new Thread(cliente);
         hilo.start();
     }
 
     public Server getServer(){ return servidor;}
+    public void setNickname(String name){
+        this.nickname = name;
+    }
 
     @FXML
     private void Inicio(ActionEvent event) throws IOException {
@@ -71,8 +76,9 @@ public class Invitadocontroller extends Observer implements Initializable {
         Gameview.setScene(new Scene(root));
         Gameview.setResizable(false);
         Gameview.setTitle("Conexión");
-        Gameview.show();
         gamecont.setServer(servidor);
+        gamecont.setNickname(nickname);
+        Gameview.show();
         Gameview.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 servidor.close();

@@ -1,6 +1,9 @@
 module tec.monster {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires org.junit.jupiter.api;
 
     opens tec.monster to javafx.fxml;
     exports tec.monster;
