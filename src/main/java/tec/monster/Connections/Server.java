@@ -25,8 +25,9 @@ import java.net.UnknownHostException;
  * @since 1.0
  */
 public class Server extends Subject implements Runnable {
+    private String user;
     private int port ;
-    private Cards carta;
+    private Paquete paquete;
     private ServerSocket servidor = null;
 
     /***
@@ -72,6 +73,14 @@ public class Server extends Subject implements Runnable {
         return this.port;
     }
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
     public void close() {
         try{
             servidor.close();
@@ -107,9 +116,9 @@ public class Server extends Subject implements Runnable {
                 conexion = servidor.accept();
 
                 input = new ObjectInputStream(conexion.getInputStream());
-                carta = (Cards) input.readObject();
+                paquete = (Paquete) input.readObject();
 
-                this.setState(carta);
+                this.setState(paquete);
 
                 conexion.close();
                 System.out.println("Cliente desconectado");

@@ -91,7 +91,6 @@ public class Invitadocontroller extends Observer implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         eIP.setText("127.0.0.1");
-        ePuerto.setText("5000");
         botoniniciar.setVisible(false);
 
         this.servidor = new Server();
@@ -100,7 +99,7 @@ public class Invitadocontroller extends Observer implements Initializable {
         Thread hilo = new Thread(servidor);
         hilo.start();
 
-        this.puertoCliente.setText("Puerto Cliente : " + Integer.toString(servidor.getPort()));
+        this.puertoCliente.setText("Puerto al que se escucha : " + Integer.toString(servidor.getPort()));
 
     }
 

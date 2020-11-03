@@ -20,27 +20,11 @@ public class Json {
     public static JsonNode parse(String jsonSource) throws JsonProcessingException{
         return objectMapper.readTree(jsonSource);
     }
-    //ejemplo: Cards card = Json.fromJson(node.get("elemento en archivo"),Cards.class);
+
     public static <A> A fromJson(JsonNode node, Class<A> aClass) throws JsonProcessingException{
         return objectMapper.treeToValue(node,aClass);
     }
     public static JsonNode toJson(Object a){
         return objectMapper.valueToTree(a);
-    }
-
-    public static String stringify(JsonNode node) throws JsonProcessingException {
-        return generateString(node,false);
-    }
-    public static String prettyPrint(JsonNode node) throws JsonProcessingException{
-        return generateString(node,true);
-    }
-    //ppara m'as atributos
-    private static String generateString(JsonNode node, boolean pretty) throws JsonProcessingException {
-        ObjectWriter objectWriter = objectMapper.writer();
-
-        if (pretty)
-            objectWriter = objectMapper.writer(SerializationFeature.INDENT_OUTPUT);
-        return objectWriter.writeValueAsString(node);
-        //solo para un atributo
     }
 }

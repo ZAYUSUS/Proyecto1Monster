@@ -19,6 +19,7 @@ public class Client implements Runnable {
     private String usuario;
     private int puerto;
     private int puertoSalida;
+
     public Client(int puerto, String host, String usuario, int puertosalida){
         this.host = host;
         this.puerto = puerto;
@@ -29,19 +30,18 @@ public class Client implements Runnable {
     @Override
     public void run() {
         ObjectOutputStream output;
-        ObjectInputStream input;
 
         try {
             Socket conector = new Socket(host,puerto);
 
-            Cards carta = new Cards();
+            Paquete paquete = new Paquete();
 
-            carta.setUsuario(this.usuario);
-            carta.setPuerto(this.puertoSalida);
+            paquete.setUsuario(this.usuario);
+            paquete.setPuerto(this.puertoSalida);
 
 
             output = new ObjectOutputStream(conector.getOutputStream());
-            output.writeObject(carta);
+            output.writeObject(paquete);
 
             System.out.println("Objeto enviado");
 

@@ -118,6 +118,7 @@
                   <Bloom />
                </effect>
             </Circle>
+            <Button fx:id="ideck" layoutX="32.0" layoutY="577.0" mnemonicParsing="false" prefHeight="250.0" prefWidth="200.0" />
          </children>
       </Pane>
    </children>

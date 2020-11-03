@@ -1,46 +1,53 @@
 package tec.monster.Game;
 
-import javafx.scene.control.Button;
+public class Cards{
+    private String id;
+    private String efecto;
+    private String tipo;
+    private String imagen;
+    private int coste;
+    private int damage;
 
-import java.io.Serializable;
 
-public class Cards extends Button implements Serializable {
-    private String Usuario;
-    private int puertoSalida;
-    private String Efecto;
-    private String Tipo;
-    private String Color;
-    /***
-     * metodo para cambiar el color del objeto
-     * @param color
-     */
-    public void setColor(String color) {
-        Color = color;
+    public void setTipo(String Tipo) {
+        tipo = Tipo;
     }
-    public void setTipo(String tipo) {
-        this.Tipo = tipo;
+    public void setEfecto(String Efecto) {
+        efecto = Efecto;
     }
-    public void setEfecto(String efecto) {
-        this.Efecto = efecto;
+    public void setImagen(String image) {
+        this.imagen = image ;
+    }
+    public void setID(String ID) {
+        id = ID;
     }
 
-    public void setPuerto(int puerto) {
-        this.puertoSalida = puerto;
+    public void setCoste(int Coste) {
+        coste = Coste;
     }
 
-    public void setUsuario(String usuario) { Usuario = usuario;}
-
-    public String getColor() {
-        return this.Color;
+    public void setDamage(int Damage) {
+        damage = Damage;
     }
+
     public String getEfecto() {
-        return this.Efecto;
+        return efecto;
     }
     public String getTipo() {
-        return this.Tipo;
+        return tipo;
     }
-    public String getUsuario() { return Usuario; }
-    public int getPuerto() {
-        return puertoSalida;
+    public String getImagen() {
+        String dir = "tec/monster/Gameimages"+"/"+tipo+"/"+imagen;
+        return dir;
+    }
+    public String getID() {
+        return id;
+    }
+    public int getCoste() {
+        return coste;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }

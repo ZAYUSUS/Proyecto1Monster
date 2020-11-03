@@ -1,0 +1,19 @@
+
+[
+  {
+      "id": "Luchador",
+      "efecto": "Fisico",
+      "tipo": "Esbirro",
+      "imagen": "Luchador.png",
+      "coste": 20,
+      "damage": 300
+    },
+    {
+      "id": "Congelar",
+      "efecto": "Congelar",
+      "tipo": "Hechizo",
+      "imagen": "Congelar.png",
+      "coste": 50,
+      "damage": 0
+    }
+]

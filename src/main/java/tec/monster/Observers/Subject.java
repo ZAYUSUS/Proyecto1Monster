@@ -1,5 +1,6 @@
 package tec.monster.Observers;
 
+import tec.monster.Connections.Paquete;
 import tec.monster.Observers.Observer;
 import tec.monster.Game.Cards;
 
@@ -8,13 +9,13 @@ import java.util.List;
 
 public class Subject {
     private List<Observer> observerList = new ArrayList<Observer>();
-    private Cards state;
+    private Paquete state;
 
-    public Cards getState(){
+    public Paquete getState(){
         return state;
     }
 
-    public void setState(Cards newState){
+    public void setState(Paquete newState){
         this.state = newState;
         NotifyAll();
     }
