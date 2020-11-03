@@ -1,0 +1,188 @@
+
+[
+  {
+      "id": "Luchador",
+      "efecto": "Fisico",
+      "tipo": "Esbirro",
+      "imagen": "Luchador.png",
+      "coste": 20,
+      "damage": 300
+    },
+    {
+      "id": "Congelar",
+      "efecto": "Congelar",
+      "tipo": "Hechizo",
+      "imagen": "Congelar.png",
+      "coste": 50,
+      "damage": 0
+    },
+  {
+    "id": "Electrocutar",
+    "efecto": "Electrocutar",
+    "tipo": "Hechizo",
+    "imagen":,
+    "coste": 5,
+    "damage": 10
+
+  },
+  {
+    "id": "Bruja",
+    "efecto": "Mágico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 35,
+    "damage": 450
+  },
+  {
+    "id": "Tornado",
+    "efecto": "Tornado",
+    "tipo": "Hechizo",
+    "imagen": ,
+    "coste": 15,
+    "damage": 75
+  },
+  {
+    "id": "Bola de fuego",
+    "efecto": "Bola de fuego",
+    "tipo": "Hechizo",
+    "imagen": ,
+    "coste": 20,
+    "damage": 100
+  },
+  {
+    "id": "Curar",
+    "efecto": "Curar",
+    "tipo": "Hechizo",
+    "imagen": ,
+    "coste": 15,
+    "damage": 0
+  },
+  {
+    "id": "Poder supremo",
+    "efecto": "El jugador puede invocar 3 cartas consecutivas sin importar el coste de maná",
+    "tipo": "Hechizo",
+    "imagen": ,
+    "coste": 40,
+    "damage": 0
+  },
+  {
+    "id": "Valquiria",
+    "efecto": "Físico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 15,
+    "damage": 130
+  },
+  {
+    "id": "Robar Carta",
+    "efecto": "Roba una carta a tu oponente",
+    "tipo": "Hechizo",
+    "imagen": ,
+    "coste": 25,
+    "damage": 0
+  },
+  {
+    "id": "Secreto #1",
+    "efecto": "Deja sin efecto la próxima carta de Poder Supremo de tu oponente",
+    "tipo": "Secreto",
+    "imagen": ,
+    "coste": 25,
+    "damage": 0
+  },
+  {
+    "id": "Dragón",
+    "efecto": "Físico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 40,
+    "damage": 550
+  },
+  {
+    "id": "Mago",
+    "efecto": "Mágico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 30,
+    "daño": 420
+  },
+  {
+    "id": "Secreto #2",
+    "efecto": "Deja sin efecto la próxima carta curar de tu oponente",
+    "tipo": "Secreto",
+    "imagen": ,
+    "coste": 25,
+    "daño": 0
+  },
+  {
+    "id": "Recupera carta",
+    "efecto": "Recupera una carta que lanzaste antes",
+    "tipo": "Hechizo",
+    "imagen": ,
+    "coste": 40,
+    "daño": 0
+  },
+  {
+    "id": "Secreto #3",
+    "efecto": "Deja sin efecto la próxima carta Luchador de tu oponente",
+    "tipo": "Secreto",
+    "imagen": ,
+    "coste": 25,
+    "daño": 0
+  },
+  {
+    "id": "Arquera",
+    "efecto": "Físico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 20,
+    "daño": 120
+  },
+  {
+    "id": "Ogro",
+    "efecto": "Físico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 15,
+    "daño": 100
+  },
+  {
+    "id": "Baja vida",
+    "efecto": "Baja la vida de tu enemigo un 15%",
+    "tipo": "Hechizo",
+    "imagen": ,
+    "coste": 40,
+    "daño": 0
+  },
+  {
+    "id": "Secreto #4",
+    "efecto": "La próxima carta que lance tu oponente le costará el doble de maná",
+    "tipo": "Secreto",
+    "imagen": ,
+    "coste": 25,
+    "daño": 0
+  },
+  {
+    "id": "Duende",
+    "efecto": "Físico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 5,
+    "daño": 30
+  },
+  {
+    "id": "Secreto #5",
+    "efecto": "La próxima carta que lance tu oponente será usada en su contra",
+    "tipo": "Secreto",
+    "imagen": ,
+    "coste": 25,
+    "daño": 0
+  },
+  {
+    "id": "Minotauro",
+    "efecto": "Físico",
+    "tipo": "Esbirro",
+    "imagen": ,
+    "coste": 35,
+    "daño": 390
+  }
+]

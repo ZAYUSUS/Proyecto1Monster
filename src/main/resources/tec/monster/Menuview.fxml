@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="tec.monster.Controllers.Menucontroller">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Viewimages/fprincipal.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="banfitrion" layoutX="28.0" layoutY="82.0" mnemonicParsing="false" onAction="#ClickAnfitrion" prefHeight="49.0" prefWidth="207.0" style="-fx-background-color: #0ACF7A; -fx-background-radius: 80; -fx-text-fill: white;" text="ANFITRION" />
+      <Button fx:id="binvitado" layoutX="28.0" layoutY="160.0" mnemonicParsing="false" onAction="#ClickInvitado" prefHeight="49.0" prefWidth="207.0" style="-fx-background-color: #0ACF7A; -fx-background-radius: 80; -fx-text-fill: white;" text="INVITADO" />
+      <TextField fx:id="nickname" alignment="CENTER" layoutX="280.0" layoutY="384.0" prefHeight="33.0" prefWidth="241.0" style="-fx-background-color: #02ba89;">
+         <font>
+            <Font name="Dubai Regular" size="24.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="324.0" layoutY="343.0" prefHeight="33.0" prefWidth="162.0" text="NOMBRE" textAlignment="CENTER" textFill="#b3ff71">
+         <font>
+            <Font name="Consolas" size="27.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
