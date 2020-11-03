@@ -87,7 +87,7 @@
     "tipo": "Secreto",
     "imagen": ,
     "coste": 25,
-    "damage" 0
+    "damage": 0
   },
   {
     "id": "Dragón",
