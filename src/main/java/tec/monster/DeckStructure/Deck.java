@@ -1,7 +1,10 @@
-package tec.monster.Game;
+package tec.monster.DeckStructure;
 
-import javafx.scene.Node;
-import tec.monster.DataStructures.Nodo;
+import tec.monster.Game.Cards;
+import tec.monster.Game.DeckControl;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Deck {
     private Nodo first;//Inicio de la pila
@@ -137,6 +140,19 @@ public class Deck {
             pilaAux = null;
         }
     }
+    public Deck Mix(){
+        ArrayList<Cards> cartas = new DeckControl().getCartas();
+        Deck nuevabaraja = new Deck();
+        Collections.shuffle(cartas);
+
+        for (Cards carta : cartas) {
+            if (nuevabaraja.getSize()>15){
+                break;
+            }
+            nuevabaraja.Push(carta);
+        }
+        return nuevabaraja;
+    }
     /**
      * Elimina el deck
      */
@@ -146,11 +162,11 @@ public class Deck {
     }
     public void ShowId(){
         Nodo aux = first;
+        int cont = 1;
 
         while (aux!=null){
-            System.out.println(aux.getCarta().getID());
-            System.out.println(aux.getCarta().getImagen());
-            System.out.println("-------------------");
+            System.out.println(cont +"."+ aux.getCarta().getID());
+            cont++;
 
             aux = aux.getNext();
         }

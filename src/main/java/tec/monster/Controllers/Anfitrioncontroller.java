@@ -122,7 +122,7 @@ public class Anfitrioncontroller extends Observer implements Initializable{
      */
     @Override
     public void update() {
-        statusarea.appendText("Se encontró una conexión de "+servidor.getState().getUsuario());
+        statusarea.appendText("Se encontró una conexión de "+servidor.getState().getUsuario()+"\n");
         conectar.setVisible(true);
     }
 

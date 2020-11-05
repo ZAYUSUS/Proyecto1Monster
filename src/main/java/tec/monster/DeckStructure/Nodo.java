@@ -1,4 +1,4 @@
-package tec.monster.DataStructures;
+package tec.monster.DeckStructure;
 
 import tec.monster.Game.Cards;
 

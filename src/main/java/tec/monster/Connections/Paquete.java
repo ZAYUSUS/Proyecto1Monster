@@ -9,6 +9,8 @@ public class Paquete implements Serializable {
     String usuario;
     Cards carta;
 
+
+
     public int getPuerto() {
         return puerto;
     }

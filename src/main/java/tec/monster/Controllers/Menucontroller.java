@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -37,7 +36,7 @@ public class Menucontroller implements Initializable {
      * @since 1.0
      */
     @FXML
-    Button binvitado,banfitrion;
+    private Button binvitado,banfitrion;
     @FXML
     public TextField nickname;
 
