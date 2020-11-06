@@ -8,7 +8,15 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- *
+ *Clase encargada de crear el Serversocket para la conexión entre el Anfitrión y el invitado.
+ * La clase desenpaqueta objetos enviados por medio del protocolo de comunicación JSON y utilizando Jackson para
+ * serializar y deserializar los objetos enviados y recibidos.
+ * <p>
+ * Esta clase hereda de la clase Observable que permite notificar a diferentes observadores sobre las acciones
+ * que se realizan.
+ * <p>
+ * Implementa la interfaz Runnable que permite a las instancias creadas correr en segundo plano por medio de el
+ * método Run().
  *
  *
  * @author Bryan
@@ -26,7 +34,15 @@ public class Client implements Runnable {
         this.usuario = usuario;
         this.puertoSalida= puertosalida;
     }
-
+    /**
+     * Crea el Serversocket y escucha en un puerto dado por el atributo port, luego crea un objeto de tipo inputstream que será el encargado
+     * de guardar los objetos que sean recibidos y luego los deserializa para enviarlos a otra clase.
+     * Todos los objetos son recibidos y enviados por medio del protocolo de Json.
+     * <p>
+     * Al recibir los objetos este método envía un aviso de cambio a todos los obserevadores vinculados.
+     *
+     * @throws IOException lanzada por un error al conectar con el socket o que un objeto vienen mal enpaquetado.
+     */
     @Override
     public void run() {
         ObjectOutputStream output;

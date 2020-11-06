@@ -55,8 +55,15 @@ public class Invitadocontroller extends Observer implements Initializable {
         Thread hilo = new Thread(cliente);
         hilo.start();
     }
-
+    /**
+     * Método que obtiene el servidor al cual se va a conectar
+     * @return servidor
+     */
     public Server getServer(){ return servidor;}
+    /**
+     * Método que muestra el nickname del jugador invitado
+     * @param name
+     */
     public void setNickname(String name){
         this.nickname = name;
     }

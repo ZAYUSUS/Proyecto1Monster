@@ -8,7 +8,11 @@ import tec.monster.HandStructure.Hand;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-
+/**
+ * Clase encargada del deck por medio de la arraylist de las cartas, para así generar los deck para los jugadores
+ * @author Bryan
+ *
+ */
 public class DeckControl {
     private Deck deck;
     private ArrayList<Cards> cartas;
@@ -19,7 +23,9 @@ public class DeckControl {
         defaultObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         return defaultObjectMapper;
     }
-
+    /**
+     * Objeto de tipo DeckControl que por medio de un try catch busca serializar la lista enlazada de cartas para que sean el deck
+     */
     public DeckControl(){
         this.deck = new Deck();
         try {

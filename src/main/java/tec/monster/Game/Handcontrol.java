@@ -4,7 +4,11 @@ import tec.monster.DeckStructure.Deck;
 import tec.monster.HandStructure.Hand;
 
 import java.io.IOException;
-
+/**
+ * Clase encargada de la suministración de las cartas mínimas que puede tener el jugador en su mano para iniciar el juego
+ * @author Bryan
+ *
+ */
 public class Handcontrol {
     Hand mano;
     Deck deckn;

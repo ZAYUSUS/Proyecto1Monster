@@ -106,6 +106,10 @@ public class Menucontroller implements Initializable {
             }
         });
     }
+    /**
+     * Retorna el nickname del jugador
+     * @return nickname.getText()
+     */
     public String getName(){
         return nickname.getText();
     }

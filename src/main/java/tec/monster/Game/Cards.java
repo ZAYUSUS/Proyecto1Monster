@@ -1,5 +1,9 @@
 package tec.monster.Game;
-
+/**
+ * Clase encargada del diseño y la especificación de las cartas utilizadas en el juego para mostrarlas en pantalla
+ * @author Bryan & Gustavo
+ *
+ */
 public class Cards{
     private String id;
     private String efecto;

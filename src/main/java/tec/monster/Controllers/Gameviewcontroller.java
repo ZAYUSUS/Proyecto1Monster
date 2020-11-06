@@ -42,7 +42,10 @@ public class Gameviewcontroller implements Initializable {
     private Pane campojuego,cartasoponente;
     @FXML
     AnchorPane cartasmazo;
-
+    /***
+     * Se encarga de obtener la lista circular enlazada de cartas 
+     * 
+     */
     private void Uploader(){
         ArrayList<Button> listabotones = new ArrayList<>();
         listabotones.add(c1);
@@ -90,7 +93,9 @@ public class Gameviewcontroller implements Initializable {
     public void setNickname(String name){
         nickname.setText(name);
     }
-
+    /**
+     * Se encarga de inicializar el juego y mostrar el deck y la mano al jugador en pantalla
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         numronda.setText("1");
