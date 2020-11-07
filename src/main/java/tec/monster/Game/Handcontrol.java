@@ -13,7 +13,11 @@ public class Handcontrol {
     Hand mano;
     Deck deckn;
 
-
+    /**
+     * Inserta las primeras cuatro cartas de la pila Deck a la lista circular Hand
+     * @param deck obtiene el deck de el jugador
+     * @return
+     */
     public Hand GenerateHand(Deck deck){
         int contador = 4;
         mano = new Hand();
