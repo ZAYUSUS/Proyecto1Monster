@@ -15,11 +15,6 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.jfxtras</groupId>
-            <artifactId>jfxtras-labs</artifactId>
-            <version>8.0-r5</version>
-        </dependency>
-        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>11</version>

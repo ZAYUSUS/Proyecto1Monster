@@ -39,6 +39,7 @@ public class Gameviewcontroller extends Observer {
     private int puertorival;
 
     private ArrayList<Button> listabotones,listacartasrival;
+    private ArrayList<Label> mostradorcartas,mostradorcartasrival;
 
 
     private String oponente;
@@ -160,7 +161,7 @@ public class Gameviewcontroller extends Observer {
                     hilo.start();
                 }
             };
-            timer.scheduleAtFixedRate(ronda, 10000, 10000);
+            timer.scheduleAtFixedRate(ronda, 10000, 30000);
     }
 
 
@@ -179,10 +180,17 @@ public class Gameviewcontroller extends Observer {
         if(mode == "Anfitrion"){
             Ronds();
         }
+        mostradorcartas = new ArrayList<>();
+        mostradorcartas.add(secreto);
+        mostradorcartas.add(hechizo);
+        mostradorcartas.add(secreto);
 
-        Image simg = new Image("tec/monster/Gameimages/Tapa.png");
-        ImageView sview = new ImageView(simg);
-        secreto.setGraphic(sview);
+        for (Label etiqueta:mostradorcartas) {
+            Image simg = new Image("tec/monster/Gameimages/Tapa.png");
+            ImageView sview = new ImageView(simg);
+            etiqueta.setGraphic(sview);
+        }
+
         Uploader();
     }
 

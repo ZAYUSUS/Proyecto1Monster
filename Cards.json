@@ -184,5 +184,60 @@
     "imagen": "Minotauro.png",
     "coste": 35,
     "daño": 390
-  }
+  },{
+  "id": "Carnero",
+  "efecto": "Físico",
+  "tipo": "Esbirro",
+  "imagen": "Minotauro.png",
+  "coste": 10,
+  "daño": 100
+  },
+  {
+    "id": "Secreto #6",
+    "efecto": "Roba 20 de mana al enemigo",
+    "tipo": "Secreto",
+    "imagen": "Congelar.png",
+    "coste": 15,
+    "daño": 0
+  },
+  {
+    "id": "Secreto #7",
+    "efecto": "Devuelve una carta aleatoria",
+    "tipo": "Secreto",
+    "imagen": "Congelar.png",
+    "coste": 30,
+    "daño": 0
+  },
+  {
+    "id": "Secreto #8",
+    "efecto": "Se salta una ronda",
+    "tipo": "Secreto",
+    "imagen": "Congelar.png",
+    "coste": 25,
+    "daño": 0
+  },
+  {
+    "id": "Secreto #9",
+    "efecto": "Hace 500 de daño",
+    "tipo": "Secreto",
+    "imagen": "Congelar.png",
+    "coste": 60,
+    "daño": 500
+  },
+  {
+    "id": "Secreto #10",
+    "efecto": "da 200 de mana",
+    "tipo": "Secreto",
+    "imagen": "Congelar.png",
+    "coste": 0,
+    "daño": 0
+  },
+  {
+    "id": "Luz Oscura",
+    "efecto": "Elimina 2 cartas",
+    "tipo": "Hechizo",
+    "imagen": "Congelar.png",
+    "coste": 30,
+    "daño": 0
+   }
 ]
