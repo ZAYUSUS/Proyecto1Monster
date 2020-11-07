@@ -113,7 +113,7 @@ public class Hand {
         }
     }
     /***
-     * Muestra os Id de las cartas en la lista
+     * Muestra los Id de las cartas en la lista
      */
     public void Show(){
         int cont = 1;
