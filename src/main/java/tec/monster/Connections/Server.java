@@ -72,7 +72,10 @@ public class Server extends Subject implements Runnable {
     public int getPort(){
         return this.port;
     }
-
+    /***
+     * Método para obtener el user
+     * @return user es una variable de tipo string que es igual al nombre del usuario al que está escuchando el Serversocket
+     */
     public String getUser() {
         return user;
     }
@@ -132,5 +135,6 @@ public class Server extends Subject implements Runnable {
         }finally {
             System.out.println("se acabo el bloque del server");
         }
+
     }
 }

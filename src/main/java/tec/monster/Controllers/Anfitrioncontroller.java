@@ -113,7 +113,7 @@ public class Anfitrioncontroller extends Observer implements Initializable{
         });
     }
     /**
-     * Método que se encarfa de retornar el servidor que se está usando.
+     * Método que se encarga de retornar el servidor que se está usando.
      *
      * @return servidor para poder acceder a los diferentes métodos del ServerSocket desde otras clases
      */

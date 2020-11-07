@@ -3,6 +3,11 @@ package tec.monster.Game;
 import java.io.Serializable;
 
 public class Cards implements Serializable {
+/**
+ * Clase encargada del diseño y la especificación de las cartas utilizadas en el juego para mostrarlas en pantalla
+ * @author Bryan & Gustavo
+ *
+ */
     private String id;
     private String efecto;
     private String tipo;
