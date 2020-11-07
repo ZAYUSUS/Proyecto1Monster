@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -31,13 +32,13 @@ import java.util.TimerTask;
 public class Gameviewcontroller extends Observer {
     private Server servidor;
     private Deck deck;
-
-
     private Hand hand,rivalhand;
 
     private Timer timer;
     private int rondactual = 0;
     private int puertorival;
+
+    private ArrayList<Button> listabotones,listacartasrival;
 
 
     private String oponente;
@@ -48,6 +49,8 @@ public class Gameviewcontroller extends Observer {
 
     @FXML
     private Label nickname,nickoponente,pvida,pmana,pvidarival,pmanarival,numronda;
+    @FXML
+    private Label hechizo,esbirro,secreto;
     @FXML
     private Circle indicaturnorival,indicaturno;
     @FXML
@@ -62,16 +65,16 @@ public class Gameviewcontroller extends Observer {
      */
 
     private void Uploader(){
-        ArrayList<Button> listabotones = new ArrayList<>();//lista con los botones que conforman la mano
-        listabotones.add(c1);
-        listabotones.add(c2);
-        listabotones.add(c3);
-        listabotones.add(c4);
-        ArrayList<Button> listacartasrival = new ArrayList<>();//lista de botones de la mano rival
-        listacartasrival.add(cr1);
-        listacartasrival.add(cr2);
-        listacartasrival.add(cr3);
-        listacartasrival.add(cr4);
+        this.listabotones = new ArrayList<>();//lista con los botones que conforman la mano
+        this.listabotones.add(c1);
+        this.listabotones.add(c2);
+        this.listabotones.add(c3);
+        this.listabotones.add(c4);
+        this.listacartasrival = new ArrayList<>();//lista de botones de la mano rival
+        this.listacartasrival.add(cr1);
+        this.listacartasrival.add(cr2);
+        this.listacartasrival.add(cr3);
+        this.listacartasrival.add(cr4);
 
         try {
             Cards firts = deck.Top();
@@ -91,6 +94,7 @@ public class Gameviewcontroller extends Observer {
             for(Button boton:listabotones){
                 Image bimg = new Image(aux.extractfirts().getImagen());
                 ImageView bview = new ImageView(bimg);
+
 
                 boton.setGraphic(bview);
             }
@@ -140,28 +144,34 @@ public class Gameviewcontroller extends Observer {
                 public void run() {
                     //codigo que se ejecuta cada 20 segundos
                     rondactual++;
-                        Platform.runLater(()->numronda.setText(Integer.toString(rondactual)));
-                        pack.setRonda(rondactual);
-                        pack.setJugador(jugador);
+                    Platform.runLater(()->numronda.setText(Integer.toString(rondactual)));
+                    pack.setRonda(rondactual);
+                    pack.setJugador(jugador);
+                    if(rondactual%2==0){
+                        indicaturnorival.setFill(Color.GREEN);
+                        indicaturno.setFill(Color.RED);
+                    }else{
+                        indicaturnorival.setFill(Color.RED);
+                        indicaturno.setFill(Color.GREEN);
 
-                        if(servidor.getState().getRonda()%2!=0){
-                            indicaturnorival.setFill(Color.GREEN);
-                            indicaturno.setFill(Color.RED);
-                        }else{
-                            indicaturnorival.setFill(Color.RED);
-                            indicaturno.setFill(Color.GREEN);
-                        }
-
-
-                        Client cliente = new Client(pack);
-                        Thread hilo = new Thread(cliente);
-                        hilo.start();
+                    }
+                    Client cliente = new Client(pack);
+                    Thread hilo = new Thread(cliente);
+                    hilo.start();
                 }
             };
             timer.scheduleAtFixedRate(ronda, 10000, 10000);
     }
 
 
+    public void AccionCarta(){
+
+
+    }
+    /**
+     * Su función es la de correr el método encargado de dar las cartas iniciales y formar el deck
+     * @param mode según sea el modo anfitrión o invitado cambia la manera de llevar la cuenta de la ronda.
+     */
     public void Start(String mode) {
         pvida.setText(Integer.toString(jugador.getLife()));
         pmana.setText(Integer.toString(jugador.getMana()));
@@ -169,18 +179,27 @@ public class Gameviewcontroller extends Observer {
         if(mode == "Anfitrion"){
             Ronds();
         }
+
+        Image simg = new Image("tec/monster/Gameimages/Tapa.png");
+        ImageView sview = new ImageView(simg);
+        secreto.setGraphic(sview);
         Uploader();
     }
 
+    /**
+     * Método que se implemeta ya que la clase GameviewController es un observador y cada vez que
+     * el server envía información la ventana se actualiza.
+     *
+     */
     @Override
     public void update() {//esto solo lo usa la ventana que se abrio derivada de el invitado
         Platform.runLater(()->numronda.setText(Integer.toString(servidor.getState().getRonda())));
-        if(servidor.getState().getRonda()%2!=0){
-            indicaturnorival.setFill(Color.GREEN);
-            indicaturno.setFill(Color.RED);
-        }else{
+        if(servidor.getState().getRonda()%2==0){
             indicaturnorival.setFill(Color.RED);
             indicaturno.setFill(Color.GREEN);
+        }else{
+            indicaturnorival.setFill(Color.GREEN);
+            indicaturno.setFill(Color.RED);
         }
     }
 }

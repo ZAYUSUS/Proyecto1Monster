@@ -103,11 +103,6 @@
                   <Font name="Unispace-Bold" size="26.0" />
                </font>
             </Label>
-            <Button fx:id="passbutton" alignment="CENTER" layoutX="1153.0" layoutY="602.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="148.0" style="-fx-background-radius: 100; -fx-background-color: #70faff;" text="PASS" textAlignment="CENTER" textFill="#91a174">
-               <font>
-                  <Font name="Stencil" size="27.0" />
-               </font>
-            </Button>
             <Circle fx:id="indicaturnorival" fill="#c7e2fc" layoutX="1541.0" layoutY="236.0" opacity="0.76" radius="26.0" stroke="#e1ff21" strokeType="INSIDE">
                <effect>
                   <Bloom />
@@ -119,14 +114,22 @@
                </effect>
             </Circle>
             <Button fx:id="ideck" layoutX="27.0" layoutY="424.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
-            <Button fx:id="c1" layoutX="218.0" layoutY="669.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
-            <Button fx:id="c2" layoutX="438.0" layoutY="669.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
-            <Button fx:id="c3" layoutX="648.0" layoutY="668.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
-            <Button fx:id="c4" layoutX="872.0" layoutY="669.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
+            <Button fx:id="c1" layoutX="218.0" layoutY="669.0" mnemonicParsing="false" onAction="#AccionCarta" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
+            <Button fx:id="c2" layoutX="438.0" layoutY="669.0" mnemonicParsing="false" onAction="#AccionCarta" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
+            <Button fx:id="c3" layoutX="648.0" layoutY="668.0" mnemonicParsing="false" onAction="#AccionCarta" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
+            <Button fx:id="c4" layoutX="872.0" layoutY="669.0" mnemonicParsing="false" onAction="#AccionCarta" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
             <Button fx:id="cr1" layoutX="218.0" layoutY="10.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
             <Button fx:id="cr2" layoutX="438.0" layoutY="12.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
             <Button fx:id="cr3" layoutX="648.0" layoutY="14.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
             <Button fx:id="cr4" layoutX="872.0" layoutY="14.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
+            <Button fx:id="botonataque" alignment="CENTER" layoutX="1112.0" layoutY="688.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="148.0" style="-fx-background-radius: 100; -fx-background-color: #70faff;" text="ATacar" textAlignment="CENTER" textFill="#91a174">
+               <font>
+                  <Font name="Stencil" size="27.0" />
+               </font>
+            </Button>
+            <Label fx:id="secreto" layoutX="304.0" layoutY="404.0" prefHeight="217.0" prefWidth="172.0" />
+            <Label fx:id="hechizo" layoutX="786.0" layoutY="404.0" prefHeight="217.0" prefWidth="172.0" />
+            <Label fx:id="esbirro" layoutX="562.0" layoutY="394.0" prefHeight="217.0" prefWidth="172.0" />
          </children>
       </Pane>
    </children>
