@@ -15,6 +15,7 @@ public class Paquete implements Serializable {
     int puerto;//puerto donde se desea enviar la info
     int puerto_salida;//puerto del servidor donde escucha el rival
     int ronda;//la ronda del juego
+    int turno;
 
 
     String Ip;
@@ -55,6 +56,10 @@ public class Paquete implements Serializable {
         return mano_rival;
     }
 
+    public int getTurno() {
+        return turno;
+    }
+
     public Cards getCarta() {
         return carta;
     }
@@ -90,4 +95,7 @@ public class Paquete implements Serializable {
         this.mano_rival = mano;
     }
 
+    public void setTurno(int turno) {
+        this.turno = turno;
+    }
 }

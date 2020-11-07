@@ -36,6 +36,7 @@ public class Gameviewcontroller extends Observer {
 
     private Timer timer;
     private int rondactual = 0;
+    private int turno = 0;
     private int puertorival;
 
     private ArrayList<Button> listabotones,listacartasrival;
@@ -55,7 +56,7 @@ public class Gameviewcontroller extends Observer {
     @FXML
     private Circle indicaturnorival,indicaturno;
     @FXML
-    private Button passbutton,ideck,c1,c2,c3,c4,cr1,cr2,cr3,cr4;
+    private Button botonataque,ideck,c1,c2,c3,c4,cr1,cr2,cr3,cr4;
     @FXML
     private Pane campojuego,cartasoponente;
 
@@ -81,25 +82,29 @@ public class Gameviewcontroller extends Observer {
             Cards firts = deck.Top();
             Image img = new Image(firts.getImagen());
             ImageView view = new ImageView(img);
+            ideck.setText(firts.getID());//le da la id como texto para luego poder buscar la carta por este mismo
             ideck.setGraphic(view);
 
             Hand aux = hand;
 
             for(Button boton1:listacartasrival){
-                Image rimg = new Image(rivalhand.extractfirts().getImagen());
+                Cards caux = rivalhand.extractfirts();
+                Image rimg = new Image(caux.getImagen());
                 ImageView rview = new ImageView(rimg);
 
+                boton1.setText(caux.getID());
                 boton1.setGraphic(rview);
+
             }
 
             for(Button boton:listabotones){
-                Image bimg = new Image(aux.extractfirts().getImagen());
+                Cards caux2 = hand.extractfirts();
+                Image bimg = new Image(caux2.getImagen());
                 ImageView bview = new ImageView(bimg);
 
-
+                boton.setText(caux2.getID());
                 boton.setGraphic(bview);
             }
-
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("Hubo un problema cargar las cartas"+ e);
@@ -135,7 +140,7 @@ public class Gameviewcontroller extends Observer {
     public void setRivalhand(Hand rivalhand) { this.rivalhand = rivalhand;}
 
     /***
-     * Método que lleva el conteo de las rondas, cada ronda dura 20 segundos
+     * Método que lleva el conteo de las rondas, cada turno dura 15 segundos
      */
     public void Ronds(){
             timer = new Timer();//cronometro para las rondas
@@ -143,17 +148,29 @@ public class Gameviewcontroller extends Observer {
             TimerTask ronda = new TimerTask() {
                 @Override
                 public void run() {
-                    //codigo que se ejecuta cada 20 segundos
-                    rondactual++;
+                    turno++;
+                    if (turno%2!=0){
+                        rondactual++;
+                    }
                     Platform.runLater(()->numronda.setText(Integer.toString(rondactual)));
                     pack.setRonda(rondactual);
                     pack.setJugador(jugador);
-                    if(rondactual%2==0){
+                    pack.setTurno(turno);
+                    if(turno%2==0){
                         indicaturnorival.setFill(Color.GREEN);
                         indicaturno.setFill(Color.RED);
+                        for (Button bot:listabotones) {
+                            bot.setDisable(true);
+                        }
+                        botonataque.setDisable(true);
+
                     }else{
                         indicaturnorival.setFill(Color.RED);
                         indicaturno.setFill(Color.GREEN);
+                        for (Button bot:listabotones) {
+                            bot.setDisable(false);
+                        }
+                        botonataque.setDisable(false);
 
                     }
                     Client cliente = new Client(pack);
@@ -161,10 +178,8 @@ public class Gameviewcontroller extends Observer {
                     hilo.start();
                 }
             };
-            timer.scheduleAtFixedRate(ronda, 10000, 30000);
+            timer.scheduleAtFixedRate(ronda, 10000, 15000);
     }
-
-
     public void AccionCarta(){
 
 
@@ -202,12 +217,20 @@ public class Gameviewcontroller extends Observer {
     @Override
     public void update() {//esto solo lo usa la ventana que se abrio derivada de el invitado
         Platform.runLater(()->numronda.setText(Integer.toString(servidor.getState().getRonda())));
-        if(servidor.getState().getRonda()%2==0){
+        if(servidor.getState().getTurno()%2==0){
             indicaturnorival.setFill(Color.RED);
             indicaturno.setFill(Color.GREEN);
+            for (Button bot:listabotones) {
+                bot.setDisable(false);
+            }
+            botonataque.setDisable(false);
         }else{
             indicaturnorival.setFill(Color.GREEN);
             indicaturno.setFill(Color.RED);
+            for (Button bot:listabotones) {
+                bot.setDisable(true);
+            }//desabilita los botones si no está en turno
+            botonataque.setDisable(true);
         }
     }
 }
