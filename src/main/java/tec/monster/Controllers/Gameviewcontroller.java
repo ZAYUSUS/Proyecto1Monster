@@ -36,7 +36,7 @@ public class Gameviewcontroller extends Observer {
     private Hand hand,rivalhand;
 
     private Timer timer;
-    private int rondactual = 1;
+    private int rondactual = 0;
     private int puertorival;
 
 
@@ -139,10 +139,8 @@ public class Gameviewcontroller extends Observer {
                 @Override
                 public void run() {
                     //codigo que se ejecuta cada 20 segundos
-                    if(rondactual!=1){
-                        rondactual++;//cambia la ronda
-                    }
-                        Platform.runLater(()->numronda.setText(Integer.toString(servidor.getState().getRonda())));
+                    rondactual++;
+                        Platform.runLater(()->numronda.setText(Integer.toString(rondactual)));
                         pack.setRonda(rondactual);
                         pack.setJugador(jugador);
 
@@ -165,13 +163,12 @@ public class Gameviewcontroller extends Observer {
 
 
     public void Start(String mode) {
-        numronda.setText(Integer.toString(rondactual));
+        pvida.setText(Integer.toString(jugador.getLife()));
+        pmana.setText(Integer.toString(jugador.getMana()));
+        numronda.setText(Integer.toString(1));
         if(mode == "Anfitrion"){
             Ronds();
         }
-        pvida.setText(Integer.toString(jugador.getLife()));
-        pmana.setText(Integer.toString(jugador.getMana()));
-
         Uploader();
     }
 
