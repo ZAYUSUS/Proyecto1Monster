@@ -6,6 +6,11 @@ import tec.monster.HandStructure.Hand;
 
 import java.io.Serializable;
 
+/***
+ * Clase utilizada para las comunicaciones entre los servers de los jugadores,
+ * es el medio principal para transferir la información.
+ */
+
 public class Paquete implements Serializable {
     int puerto;//puerto donde se desea enviar la info
     int puerto_salida;//puerto del servidor donde escucha el rival
@@ -21,7 +26,7 @@ public class Paquete implements Serializable {
     Player jugador;
 
 
-
+//sets y gets de los atributos
 
     public int getPuerto() {
         return puerto;
@@ -78,7 +83,6 @@ public class Paquete implements Serializable {
     public void setPuerto_rival(int puerto_rival) {
         this.puerto_salida = puerto_rival;
     }
-
     public void setFuente(String fuente) {
         this.fuente = fuente;
     }

@@ -8,12 +8,12 @@ public class Cards implements Serializable {
  * @author Bryan & Gustavo
  *
  */
-    private String id;
-    private String efecto;
-    private String tipo;
-    private String imagen;
+    private String id;//Nombre de la carta
+    private String efecto;//función de la carta
+    private String tipo;//tipo de carta
+    private String imagen;//imagen personalizada de la carta
     private int coste;
-    private int damage;
+    private int damage;//daño de la carta
 
 
     public void setTipo(String Tipo) {

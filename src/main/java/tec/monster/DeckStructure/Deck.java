@@ -140,6 +140,11 @@ public class Deck {
             pilaAux = null;
         }
     }
+
+    /**
+     * Mezcla las cartas del Deck aleatoriamente
+     * @return un Deck nuevo
+     */
     public Deck Mix(){
         ArrayList<Cards> cartas = new DeckControl().getCartas();
         Deck nuevabaraja = new Deck();
