@@ -25,6 +25,7 @@ public class Json {
         return objectMapper.treeToValue(node,aClass);
     }
     public static JsonNode toJson(Object a){
+
         return objectMapper.valueToTree(a);
     }
 }

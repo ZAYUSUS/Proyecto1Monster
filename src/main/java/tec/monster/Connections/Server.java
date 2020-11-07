@@ -77,10 +77,6 @@ public class Server extends Subject implements Runnable {
         return user;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
     public void close() {
         try{
             servidor.close();
@@ -91,6 +87,12 @@ public class Server extends Subject implements Runnable {
         }
 
     }
+    /**
+     * Timer para enviar información a los jugadores
+     *
+     */
+
+
 
     /**
      * Crea el Serversocket y escucha en un puerto dado por el atributo port, luego crea un objeto de tipo inputstream que será el encargado
@@ -130,6 +132,5 @@ public class Server extends Subject implements Runnable {
         }finally {
             System.out.println("se acabo el bloque del server");
         }
-
     }
 }

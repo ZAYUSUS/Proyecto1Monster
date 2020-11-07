@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tec.monster.Controllers.Gameviewcontroller">
+<AnchorPane fx:id="principal" prefHeight="900.0" prefWidth="1639.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tec.monster.Controllers.Gameviewcontroller">
    <children>
       <ImageView fitHeight="900.0" fitWidth="1639.0" pickOnBounds="true" preserveRatio="true">
          <image>

@@ -1,6 +1,8 @@
 package tec.monster.Game;
 
-public class Cards{
+import java.io.Serializable;
+
+public class Cards implements Serializable {
     private String id;
     private String efecto;
     private String tipo;

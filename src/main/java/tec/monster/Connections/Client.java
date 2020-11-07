@@ -1,9 +1,6 @@
 package tec.monster.Connections;
 
-import tec.monster.Game.Cards;
-
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -19,14 +16,15 @@ public class Client implements Runnable {
     private String usuario;
     private int puerto;
     private int puertoSalida;
+    private Paquete pack;
 
-    public Client(int puerto, String host, String usuario, int puertosalida){
-        this.host = host;
-        this.puerto = puerto;
-        this.usuario = usuario;
-        this.puertoSalida= puertosalida;
+    public Client(Paquete packet){
+        pack = packet;
+        this.host = packet.getIp();
+        this.usuario = packet.getUsuario();
+        this.puerto = packet.getPuerto();
+        this.puertoSalida = packet.getPuerto_salida();
     }
-
     @Override
     public void run() {
         ObjectOutputStream output;
@@ -34,14 +32,9 @@ public class Client implements Runnable {
         try {
             Socket conector = new Socket(host,puerto);
 
-            Paquete paquete = new Paquete();
-
-            paquete.setUsuario(this.usuario);
-            paquete.setPuerto(this.puertoSalida);
-
 
             output = new ObjectOutputStream(conector.getOutputStream());
-            output.writeObject(paquete);
+            output.writeObject(pack);
 
             System.out.println("Objeto enviado");
 

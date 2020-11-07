@@ -47,13 +47,4 @@ public class DeckControl {
         return cartas;
     }
 
-    public static void main(String[] args) {
-        DeckControl d =new DeckControl();
-        Deck dd = d.GenerateDeck();
-        dd.ShowId();
-        System.out.println("----------------------------");
-
-        Hand mano = new Handcontrol().GenerateHand(dd);
-
-    }
 }

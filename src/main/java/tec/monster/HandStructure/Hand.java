@@ -2,7 +2,9 @@ package tec.monster.HandStructure;
 
 import tec.monster.Game.Cards;
 
-public class Hand {
+import java.io.Serializable;
+
+public class Hand implements Serializable {
     Handnode firts;
     Handnode last;
     int size;
