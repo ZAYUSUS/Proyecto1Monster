@@ -76,7 +76,7 @@ public class Gameviewinvitadocontroller extends Observer {
             int contador = 0;
             int contar = 0;
 
-            int posx = 150;
+            int posx = 170;
             int posxr = 150;
 
             while (contador<=hand.getSize()){
@@ -169,7 +169,7 @@ public class Gameviewinvitadocontroller extends Observer {
             datos.appendText(carta+"\n");
         }
 
-        Platform.runLater(()->listaHistory.add(datos,ronda));
+        Platform.runLater(()->listaHistory.add(datos,ronda,principal));
     }
 
     /***

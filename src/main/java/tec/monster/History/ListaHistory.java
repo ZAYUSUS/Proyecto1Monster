@@ -5,6 +5,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import tec.monster.Connections.Paquete;
 
 public class ListaHistory {
@@ -21,8 +22,8 @@ public class ListaHistory {
         menu.setLayoutY(250);
     }
 
-    public void add(TextArea dato,int ronda) {
-        NodoHistory nuevo = new NodoHistory(dato,ronda);
+    public void add(TextArea dato, int ronda, AnchorPane root) {
+        NodoHistory nuevo = new NodoHistory(dato,ronda,root);
 
         if (first == null) {//si la lista esta vacia
             nuevo.setDatos(dato);

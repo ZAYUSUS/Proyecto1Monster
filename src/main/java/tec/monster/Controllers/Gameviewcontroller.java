@@ -137,7 +137,7 @@ public class Gameviewcontroller extends Observer {
         for (String carta:cartasusadas) {
             datos.appendText(carta+"\n");
         }
-        Platform.runLater(()->listaHistory.add(datos,ronda));
+        Platform.runLater(()->listaHistory.add(datos,ronda,principal));
     }
     /**
      * Se encarga de crear el deck al inicio de la partida, lee los objetos del archivo

@@ -1,8 +1,11 @@
 package tec.monster.History;
 
+import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 
 /**
@@ -16,7 +19,7 @@ public class NodoHistory {
     private TextArea datos;
     private MenuItem visual;
 
-    public NodoHistory(TextArea datos ,int ronda){
+    public NodoHistory(TextArea datos , int ronda, AnchorPane root){
         visual = new MenuItem("Ronda "+ronda);
         this.datos = datos;
         next = null;
@@ -28,6 +31,8 @@ public class NodoHistory {
             datos.setLayoutY(0);
             datos.setPrefSize(200,200);
             panel.getChildren().add(datos);
+            root.getChildren().add(panel);
+
         });
     }
 
