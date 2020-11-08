@@ -88,7 +88,7 @@ public class Anfitrioncontroller extends Observer implements Initializable{
         FXMLLoader loader2 = new FXMLLoader(getClass().getClassLoader().getResource("tec/monster/Gameview.fxml"));
         AnchorPane root = (AnchorPane) loader2.load();
 
-        Gameviewcontroller gamecont = loader2.getController();
+        Gameviewcontroller gamecont =loader2.getController();
         Gameview = new Stage();
         //Gameview.initModality(Modality.APPLICATION_MODAL);
         Gameview.setScene(new Scene(root));
@@ -97,11 +97,10 @@ public class Anfitrioncontroller extends Observer implements Initializable{
         gamecont.setDeck(deck);
         gamecont.setHand(hand);
         gamecont.setRivalhand(rivalhand);
-        gamecont.setServer(servidor);
+        gamecont.setServer(this.servidor);
         gamecont.setNickname(nickname);
         gamecont.setPack(pack);
-        gamecont.Start("Anfitrion");
-
+        gamecont.Start();
         Gameview.show();
         Gameview.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {

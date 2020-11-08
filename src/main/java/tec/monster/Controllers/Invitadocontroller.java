@@ -101,10 +101,10 @@ public class Invitadocontroller extends Observer implements Initializable {
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();
 
-        FXMLLoader loader2 = new FXMLLoader(getClass().getClassLoader().getResource("tec/monster/Gameview.fxml"));
+        FXMLLoader loader2 = new FXMLLoader(getClass().getClassLoader().getResource("tec/monster/Gameinvitadoview.fxml"));
         AnchorPane root = (AnchorPane) loader2.load();
 
-        Gameviewcontroller gamecont = loader2.getController();
+        Gameviewinvitadocontroller gamecont = loader2.getController();
         Gameview = new Stage();
         //Gameview.initModality(Modality.APPLICATION_MODAL);
         Gameview.setScene(new Scene(root));
@@ -115,7 +115,8 @@ public class Invitadocontroller extends Observer implements Initializable {
         gamecont.setRivalhand(rivalhand);
         gamecont.setServer(servidor);
         gamecont.setNickname(nickname);
-        gamecont.Start("Invitado");
+        gamecont.setPack(pack);
+        gamecont.Start();
         Gameview.show();
         Gameview.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {

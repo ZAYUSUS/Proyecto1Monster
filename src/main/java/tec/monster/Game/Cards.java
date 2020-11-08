@@ -1,5 +1,11 @@
 package tec.monster.Game;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+
 import java.io.Serializable;
 
 public class Cards implements Serializable {
@@ -8,6 +14,7 @@ public class Cards implements Serializable {
  * @author Bryan & Gustavo
  *
  */
+
     private String id;//Nombre de la carta
     private String efecto;//función de la carta
     private String tipo;//tipo de carta
@@ -56,5 +63,15 @@ public class Cards implements Serializable {
 
     public int getDamage() {
         return damage;
+    }
+
+    public Button GenerateButton(){
+        Button boton = new Button();
+        boton.setPrefSize(172,210);
+        Image rimg = new Image(this.getImagen());
+        ImageView rview = new ImageView(rimg);
+
+        boton.setGraphic(rview);
+        return boton;
     }
 }

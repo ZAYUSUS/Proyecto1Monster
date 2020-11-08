@@ -1,14 +1,12 @@
 package tec.monster.Controllers;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -16,9 +14,8 @@ import javafx.scene.shape.Circle;
 import tec.monster.Connections.Client;
 import tec.monster.Connections.Paquete;
 import tec.monster.Connections.Server;
-import javafx.fxml.FXML;
-import tec.monster.Game.Cards;
 import tec.monster.DeckStructure.Deck;
+import tec.monster.Game.Cards;
 import tec.monster.Game.Player;
 import tec.monster.HandStructure.Hand;
 import tec.monster.HandStructure.Handnode;
@@ -26,32 +23,18 @@ import tec.monster.Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
-/***
- * Controlador de el archivo Gameview.fxml su función principal es la de llamar a las diferentes clases encargadas de
- * controlar las acciones realizadas en la ventana.
- *
- * author Bryan
- */
-
-public class Gameviewcontroller extends Observer {
+public class Gameviewinvitadocontroller extends Observer {
     private Server servidor;
     private Deck deck;
     private Hand hand,rivalhand;
-
     private Timer timer;
     private int rondactual = 0;
     private int turno = 0;
-
     private ArrayList<Button> listacartas,listacartasrival;
     private ArrayList<Label> mostradorcartas,mostradorcartasrival;
-
-
     private String oponente;
-
     private Player jugador;
-
     private Paquete pack;
 
     @FXML
@@ -66,7 +49,6 @@ public class Gameviewcontroller extends Observer {
     private Pane campojuego,cartasoponente;
     @FXML
     private AnchorPane principal;
-
 
     /**
      * Uploader se encarga de al iniciar la ventana se generén las listas que contienen las cartas del deck y las de la mano
@@ -127,6 +109,7 @@ public class Gameviewcontroller extends Observer {
         }
 
     }
+
     /**
      * Se encarga de crear el deck al inicio de la partida, lee los objetos del archivo
      * Cards.json y los transforma a instancias de la clase Cards
@@ -155,52 +138,6 @@ public class Gameviewcontroller extends Observer {
     public void setRivalhand(Hand rivalhand) { this.rivalhand = rivalhand;}
 
     /***
-     * Método que lleva el conteo de las rondas, cada turno dura 15 segundos, cada dos
-     * turno se aumenta la ronda
-     */
-    public void Ronds(){
-            timer = new Timer();//cronometro para las rondas
-            TimerTask ronda = new TimerTask() {
-                @Override
-                public void run() {
-                    turno++;
-                    if (turno%2!=0){
-                        rondactual++;
-                        int  mana = jugador.getMana();
-                        if(mana+50>200){
-                            jugador.setMana(200);
-                        }else{
-                            jugador.setMana(mana+50);
-                        }
-                        Platform.runLater(()->pmana.setText(Integer.toString(jugador.getMana())));
-                    }
-                    Platform.runLater(()->numronda.setText(Integer.toString(rondactual)));
-                    pack.setRonda(rondactual);
-                    pack.setJugador(jugador);
-                    pack.setTurno(turno);
-                    if(turno%2==0){
-                        indicaturnorival.setFill(Color.GREEN);
-                        indicaturno.setFill(Color.RED);
-                        for (Button bot:listacartas) {
-                            bot.setDisable(true);
-                        }
-                        botonataque.setDisable(true);
-
-                    }else{
-                        indicaturnorival.setFill(Color.RED);
-                        indicaturno.setFill(Color.GREEN);
-                        for (Button bot:listacartas) {
-                            bot.setDisable(false);
-                        }
-                        botonataque.setDisable(false);
-                    }
-                    Notificador();
-                }
-            };
-            timer.scheduleAtFixedRate(ronda, 0, 15000);
-    }
-
-    /***
      * Método que se usará por cada carta al ser presionada
      * @return
      */
@@ -223,15 +160,26 @@ public class Gameviewcontroller extends Observer {
             alert.showAndWait();
         }
     }
+
+    /***
+     * Método que crea un cliente uy envía los eventos que suceden en la ronda
+     */
+    public void Notificador(){
+        Client cliente = new Client(this.pack);
+        Thread hilo = new Thread(cliente);
+        hilo.start();
+    }
+
     /**
      * Su función es la de correr el método encargado de dar las cartas iniciales y formar el deck
+     *
      */
     public void Start() {
         Uploader();
         pvida.setText(Integer.toString(jugador.getLife()));
         pmana.setText(Integer.toString(jugador.getMana()));
         numronda.setText(Integer.toString(1));
-        Ronds();
+
         mostradorcartas = new ArrayList<>();
         mostradorcartas.add(secreto);
         mostradorcartas.add(hechizo);
@@ -245,24 +193,38 @@ public class Gameviewcontroller extends Observer {
 
     }
 
-    /***
-     * Método que crea un cliente uy envía los eventos que suceden en la ronda
-     */
-    public void Notificador(){
-        Client cliente = new Client(this.pack);
-        Thread hilo = new Thread(cliente);
-        hilo.start();
-    }
 
-    /**
-     * Método que se implemeta ya que la clase GameviewController es un observador y cada vez que
-     * el server envía información la ventana se actualiza.
-     *
-     */
     @Override
-    public void update() {//esto solo lo usa la ventana que se abrio derivada de el invitado
+    public void update() {
+        if (servidor.getState().getTurno()%2!=0){
+            int  mana = jugador.getMana();//se agrega el 25% del mana total
+            if(mana+50>200){
+                jugador.setMana(200);
+            }else{
+                jugador.setMana(mana+50);
+            }
+            Platform.runLater(()->pmana.setText(Integer.toString(jugador.getMana())));
+            this.pack.setJugador(jugador);
+            Notificador();
+        }
         Platform.runLater(()-> pmanarival.setText(Integer.toString(servidor.getState().getJugador().getMana())));
-        Platform.runLater(()-> pvidarival.setText(Integer.toString(servidor.getState().getJugador().getLife())));
+        Platform.runLater(()-> numronda.setText(Integer.toString(servidor.getState().getRonda())));
+        //indica que se cambio la ronda
+        if(servidor.getState().getTurno()%2==0){
+            indicaturnorival.setFill(Color.RED);
+            indicaturno.setFill(Color.GREEN);
+            for (Button bot:listacartas) {
+                bot.setDisable(false);
+            }
+            botonataque.setDisable(false);
 
+        }else{//si el turno no es par
+            indicaturnorival.setFill(Color.GREEN);
+            indicaturno.setFill(Color.RED);
+            for (Button bot:listacartas) {
+                bot.setDisable(true);
+            }//desabilita los botones si no está en turno
+            botonataque.setDisable(true);
+        }
     }
 }
