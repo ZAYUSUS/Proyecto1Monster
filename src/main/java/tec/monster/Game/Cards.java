@@ -68,10 +68,11 @@ public class Cards implements Serializable {
     public Button GenerateButton(){
         Button boton = new Button();
         boton.setPrefSize(172,210);
-        Image rimg = new Image(this.getImagen());
-        ImageView rview = new ImageView(rimg);
+        //Image rimg = new Image(this.getImagen());
+        //ImageView rview = new ImageView(rimg);
+        boton.setText(this.getID());
 
-        boton.setGraphic(rview);
+        //boton.setGraphic(rview);
         return boton;
     }
 }

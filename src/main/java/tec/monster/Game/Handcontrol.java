@@ -18,8 +18,8 @@ public class Handcontrol {
      * @param deck obtiene el deck de el jugador
      * @return
      */
-    public Hand GenerateHand(Deck deck){
-        int contador = 4;
+    public Hand GenerateHand(Deck deck,int cont){
+        int contador = cont;
         mano = new Hand();
         try {
             while (contador!=0){

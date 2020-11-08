@@ -114,14 +114,19 @@
                </effect>
             </Circle>
             <Button fx:id="ideck" layoutX="27.0" layoutY="424.0" mnemonicParsing="false" prefHeight="210.0" prefWidth="172.0" style="-fx-background-color: #b88112;" />
-            <Button fx:id="botonataque" alignment="CENTER" layoutX="1153.0" layoutY="688.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="148.0" style="-fx-background-radius: 100; -fx-background-color: #70faff;" text="ATacar" textAlignment="CENTER" textFill="#91a174">
+            <Label fx:id="Ironda1" alignment="CENTER" layoutX="1166.0" layoutY="678.0" lineSpacing="2.0" prefHeight="87.0" prefWidth="155.0" text="Daño generado" textFill="#e39266">
                <font>
-                  <Font name="Stencil" size="27.0" />
+                  <Font name="Playbill" size="37.0" />
                </font>
-            </Button>
-            <Label fx:id="secreto" layoutX="304.0" layoutY="404.0" prefHeight="217.0" prefWidth="172.0" />
-            <Label fx:id="hechizo" layoutX="786.0" layoutY="404.0" prefHeight="217.0" prefWidth="172.0" />
-            <Label fx:id="esbirro" layoutX="562.0" layoutY="394.0" prefHeight="217.0" prefWidth="172.0" />
+            </Label>
+            <Label fx:id="idanio" layoutX="1188.0" layoutY="747.0" prefHeight="52.0" prefWidth="111.0" style="-fx-background-color: #c9938f;" textFill="#e42c2c">
+               <font>
+                  <Font name="HYGothic-Medium" size="24.0" />
+               </font>
+               <effect>
+                  <Bloom />
+               </effect>
+            </Label>
          </children>
       </Pane>
    </children>

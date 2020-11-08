@@ -64,7 +64,7 @@ public class Anfitrioncontroller extends Observer implements Initializable{
 
         deck = new DeckControl().GenerateDeck();
         chand = new Handcontrol();
-        hand = chand.GenerateHand(deck);
+        hand = chand.GenerateHand(deck,4);
         deck = chand.getDeck();
         jugador = new Player();
 

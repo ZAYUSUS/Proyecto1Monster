@@ -111,37 +111,6 @@ public class Deck {
         }
     }
     /**
-     * Actualiza el estado de la carta en deck.
-     * @param reference carta que se quiere editar.
-     * @param carta carta nueva.
-     */
-    public void Edit(String  reference, Cards carta){
-        if (Search(reference)) {
-            Nodo pilaAux = null;
-            while(reference != first.getCarta().getID()){
-                Nodo temp = new Nodo();
-                temp.setCarta(first.getCarta());
-                if(pilaAux == null){
-                    pilaAux = temp;
-                }
-                else{
-                    temp.setNext(pilaAux);
-                    pilaAux = temp;
-                }
-                Pop();
-            }
-
-            first.setCarta(carta);
-
-            while(pilaAux != null){
-                Push(pilaAux.getCarta());
-                pilaAux = pilaAux.getNext();
-            }
-            pilaAux = null;
-        }
-    }
-
-    /**
      * Mezcla las cartas del Deck aleatoriamente
      * @return un Deck nuevo
      */

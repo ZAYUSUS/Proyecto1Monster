@@ -16,6 +16,7 @@ public class Paquete implements Serializable {
     int puerto_salida;//puerto del servidor donde escucha el rival
     int ronda;//la ronda del juego
     int turno;
+    int danioeviado;
 
 
     String Ip;
@@ -60,9 +61,16 @@ public class Paquete implements Serializable {
         return turno;
     }
 
+    public int getDanioeviado() {
+        int aux = danioeviado;
+        danioeviado = 0;
+        return aux;
+    }
+
     public Cards getCarta() {
         return carta;
     }
+
     public void setPuerto(int puerto) {
         this.puerto = puerto;
     }
@@ -97,5 +105,9 @@ public class Paquete implements Serializable {
 
     public void setTurno(int turno) {
         this.turno = turno;
+    }
+
+    public void setDanioeviado(int danioeviado) {
+        this.danioeviado = danioeviado;
     }
 }

@@ -62,7 +62,7 @@ public class Invitadocontroller extends Observer implements Initializable {
     public void Conectar(ActionEvent e){
         deck = new DeckControl().GenerateDeck();
         Handcontrol chand = new Handcontrol();
-        hand = chand.GenerateHand(deck);
+        hand = chand.GenerateHand(deck,4);
         deck = chand.getDeck();
         jugador = new Player();
 

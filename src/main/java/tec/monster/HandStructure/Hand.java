@@ -72,33 +72,11 @@ public class Hand implements Serializable {
         }
     }
 
-    /**
-     * Método para extraer el primer elemento de la lista
-     */
-    public Cards extractfirts() {
-        if (firts != null) {
-            Cards carta;
-            if (firts.next != firts) {
-                carta = firts.carta; // se inserta el dato
-                firts.next.previous = firts.getPrevious(); // inicio en su nodo siguiente, en su .ant apunta al nodo anterior de inicio
-                firts.previous.next = firts.getNext(); // inicio en su nodo anterior, en su .next apunta al nodo siguiente de inicio
-                firts = firts.next;
-                size--;
-            } else {
-                carta = firts.getCarta();
-                firts = null;
-            }
-            return carta;
-        }
-        return null;
-    }
-
     /***
      * Método para eliminar una carta de la lista por su Id
      *
      */
     public void Remove(String id){
-        boolean state=false;
         Handnode aux = firts;
 
         if(aux != null){
@@ -107,7 +85,6 @@ public class Hand implements Serializable {
                     firts.next.previous = aux.getPrevious();
                     firts.previous.next = aux.getNext();
                     firts = firts.getNext();
-                    state=true;
                     size--;
                 }
                 aux = aux.getNext();

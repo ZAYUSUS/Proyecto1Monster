@@ -1,14 +1,9 @@
 package tec.monster.Controllers;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -19,9 +14,12 @@ import tec.monster.Connections.Server;
 import javafx.fxml.FXML;
 import tec.monster.Game.Cards;
 import tec.monster.DeckStructure.Deck;
+import tec.monster.Game.Handcontrol;
 import tec.monster.Game.Player;
 import tec.monster.HandStructure.Hand;
 import tec.monster.HandStructure.Handnode;
+import tec.monster.History.ListaHistory;
+import tec.monster.History.NodoHistory;
 import tec.monster.Observers.Observer;
 
 import java.util.ArrayList;
@@ -39,29 +37,32 @@ public class Gameviewcontroller extends Observer {
     private Server servidor;
     private Deck deck;
     private Hand hand,rivalhand;
-
     private Timer timer;
+    private ListaHistory listaHistory;
+
     private int rondactual = 0;
     private int turno = 0;
+    private int danioataque = 0;
+
+    private int daniorecibido=0;
+
 
     private ArrayList<Button> listacartas,listacartasrival;
-    private ArrayList<Label> mostradorcartas,mostradorcartasrival;
 
 
     private String oponente;
+    private ArrayList<String> cartasusadas;
 
     private Player jugador;
 
     private Paquete pack;
 
     @FXML
-    private Label nickname,nickoponente,pvida,pmana,pvidarival,pmanarival,numronda;
-    @FXML
-    private Label hechizo,esbirro,secreto;
+    private Label nickname,nickoponente,pvida,pmana,pvidarival,pmanarival,numronda,idanio;
     @FXML
     private Circle indicaturnorival,indicaturno;
     @FXML
-    private Button botonataque,ideck;
+    private Button ideck;
     @FXML
     private Pane campojuego,cartasoponente;
     @FXML
@@ -69,7 +70,7 @@ public class Gameviewcontroller extends Observer {
 
 
     /**
-     * Uploader se encarga de al iniciar la ventana se generén las listas que contienen las cartas del deck y las de la mano
+     * Uploader se encarga de al iniciar la ventana y se generén las listas que contienen las cartas del deck y las de la mano
      * para empezar el juego
      */
 
@@ -78,13 +79,8 @@ public class Gameviewcontroller extends Observer {
         this.listacartasrival = new ArrayList<>();//lista de botones de la mano rival
 
         try {
-            Cards firts = deck.Top();
-            Image img = new Image(firts.getImagen());
-            ImageView view = new ImageView(img);
-            ideck.setText(firts.getID());//le da la id como texto para luego poder buscar la carta por este mismo
-            ideck.setGraphic(view);
+            RefreshDeck();
 
-            Hand aux = hand;
             Handnode caux = hand.getFirts();
             Handnode raux = rivalhand.getFirts();
             int contador = 0;
@@ -122,10 +118,26 @@ public class Gameviewcontroller extends Observer {
             }
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("Hubo un problema cargar las cartas"+ e);
+            System.out.println("Hubo un problema al cargar las cartas"+ e);
             System.out.println(servidor.getState().getFuente());
         }
 
+    }
+    /**
+     * Método que se encarga de agregar un item al historial cada ronda que pasa
+     */
+    public void History(int ronda){
+        TextArea datos = new TextArea();
+        datos.setEditable(false);
+        datos.appendText("Jugador"+"\n");
+        datos.appendText("Ronda:"+ronda+"\n");
+        datos.appendText("Daño recibido en total:"+daniorecibido+"\n");
+        datos.appendText("Daño recibido en la ronda:"+servidor.getState().getDanioeviado()+"\n");
+        datos.appendText("Cartas utilizadas en la ronda:"+"\n");
+        for (String carta:cartasusadas) {
+            datos.appendText(carta+"\n");
+        }
+        Platform.runLater(()->listaHistory.add(datos,ronda));
     }
     /**
      * Se encarga de crear el deck al inicio de la partida, lee los objetos del archivo
@@ -165,7 +177,9 @@ public class Gameviewcontroller extends Observer {
                 public void run() {
                     turno++;
                     if (turno%2!=0){
-                        rondactual++;
+                        rondactual++;//cambia de ronda
+                        History(rondactual);//envia la información recolectada al historial
+                        cartasusadas = new ArrayList<>();//limpia la lista de las cartas utilizadas en la ronda
                         int  mana = jugador.getMana();
                         if(mana+50>200){
                             jugador.setMana(200);
@@ -184,7 +198,10 @@ public class Gameviewcontroller extends Observer {
                         for (Button bot:listacartas) {
                             bot.setDisable(true);
                         }
-                        botonataque.setDisable(true);
+                        pack.setDanioeviado(danioataque);
+                        History(rondactual);
+                        danioataque = 0;
+                        Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
 
                     }else{
                         indicaturnorival.setFill(Color.RED);
@@ -192,12 +209,27 @@ public class Gameviewcontroller extends Observer {
                         for (Button bot:listacartas) {
                             bot.setDisable(false);
                         }
-                        botonataque.setDisable(false);
                     }
+
                     Notificador();
                 }
             };
             timer.scheduleAtFixedRate(ronda, 0, 15000);
+    }
+    /***
+     * M'etodo que se encarga de refrescar la imagen de la carta que está en la primera posición del deck en pantalla
+     */
+    public void RefreshDeck(){
+        Cards firts = null;
+        try {
+            firts = deck.Top();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Image img = new Image(firts.getImagen());
+        ImageView view = new ImageView(img);
+        ideck.setText(firts.getID());//le da la id como texto para luego poder buscar la carta por este mismo
+        ideck.setGraphic(view);
     }
 
     /***
@@ -207,13 +239,41 @@ public class Gameviewcontroller extends Observer {
     public  void AccionCarta(Button boton , Cards carta){
 
         if(jugador.getMana()>carta.getCoste()){
-            listacartas.remove(boton);
-            principal.getChildren().remove(boton);
-            String tipo = carta.getTipo();
+            System.out.println("Inicio cambio-------------------------------------------");
+            double posx = boton.getLayoutX();//obtiene la posición del boton anterior
+            cartasusadas.add(carta.getID());//añade la carta a la lista de cartas usadas
+            listacartas.remove(boton);//remueve el boton de la pantalla
+            principal.getChildren().remove(boton);//remueve el boton de la pantalla
+            try {
+                hand.Insert(deck.Top());//obtiene la primera carta del Deck y la inserta a la mano
+                deck.Remove(deck.Top().getID());
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ALERTA!");
+                alert.setHeaderText(null);
+                alert.setContentText("No tiene cartas en el Deck");
+                alert.showAndWait();
+            }
+            System.out.println("Final etapa de calibración''''''''''''''''''''''''''''''");
+
+            Button cartanueva = hand.getFirts().getCarta().GenerateButton();
+            listacartas.add(cartanueva);//añade la nueva carta a la lista que contiene los botones de las cartas
+            cartanueva.setLayoutX(posx);//obtiene la posición del boton anterior
+            cartanueva.setLayoutY(669);
+            cartanueva.setOnMouseClicked(mouseEvent -> AccionCarta(cartanueva,hand.getFirts().getCarta()));//le dá la función a realizar cuando se use
+            principal.getChildren().add(cartanueva);//añade el boton a la pantalla
+            RefreshDeck();
+
+
+            System.out.println("Se refreco el deck correctamente--------------------------");
+
+            Eventselector(carta);// verifica el tipo de carta para seleccionar el evento asociado
+
             int mana = jugador.getMana();
             jugador.setMana(mana-carta.getCoste());
             pmana.setText(Integer.toString(jugador.getMana()));
             this.pack.setJugador(jugador);
+            //hand.Remove(carta.getID());//se saca la carta de la mano
             Notificador();
         }else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -221,6 +281,27 @@ public class Gameviewcontroller extends Observer {
             alert.setHeaderText(null);
             alert.setContentText("No tienes suficiente mana!");
             alert.showAndWait();
+        }
+    }
+
+    /***
+     * Método que indica cuál eventos sucederá según el tipo de la carta y su ID
+     */
+    public void Eventselector(Cards carta){
+        String tipo = carta.getTipo();
+        String Id = carta.getID();
+        switch (tipo){
+            case "Esbirro":
+                int danio = carta.getDamage();
+                danioataque+=danio;
+                Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
+                break;
+            case "Hechizo":
+                System.out.println("es un hechizo");
+                break;
+            case "Secreto":
+                System.out.println("Es un secreto");
+                break;
         }
     }
     /**
@@ -231,18 +312,10 @@ public class Gameviewcontroller extends Observer {
         pvida.setText(Integer.toString(jugador.getLife()));
         pmana.setText(Integer.toString(jugador.getMana()));
         numronda.setText(Integer.toString(1));
+        cartasusadas = new ArrayList<>();
+        listaHistory = new ListaHistory();
+        principal.getChildren().add(listaHistory.getMenu());
         Ronds();
-        mostradorcartas = new ArrayList<>();
-        mostradorcartas.add(secreto);
-        mostradorcartas.add(hechizo);
-        mostradorcartas.add(secreto);
-
-        for (Label etiqueta:mostradorcartas) {
-            Image simg = new Image("tec/monster/Gameimages/Tapa.png");
-            ImageView sview = new ImageView(simg);
-            etiqueta.setGraphic(sview);
-        }
-
     }
 
     /***
@@ -261,8 +334,12 @@ public class Gameviewcontroller extends Observer {
      */
     @Override
     public void update() {//esto solo lo usa la ventana que se abrio derivada de el invitado
-        Platform.runLater(()-> pmanarival.setText(Integer.toString(servidor.getState().getJugador().getMana())));
-        Platform.runLater(()-> pvidarival.setText(Integer.toString(servidor.getState().getJugador().getLife())));
-
+        jugador.setLife(jugador.getLife()-servidor.getState().getDanioeviado());
+        daniorecibido+=servidor.getState().getDanioeviado();
+        Platform.runLater(()->{
+            pvida.setText(Integer.toString(jugador.getLife()));
+            pmanarival.setText(Integer.toString(servidor.getState().getJugador().getMana()));
+            pvidarival.setText(Integer.toString(servidor.getState().getJugador().getLife()));
+        } );
     }
 }
