@@ -298,8 +298,7 @@ public class Gameviewinvitadocontroller extends Observer {
 
             ButtonType ok = new ButtonType("Ok");
             alert.getButtonTypes().setAll(ok);
-            Optional<ButtonType> result = alert.showAndWait();
-
+            alert.showAndWait();
         }
         //indica que se cambio la ronda
         if(servidor.getState().getTurno()%2==0){//si el turno es par
@@ -332,6 +331,7 @@ public class Gameviewinvitadocontroller extends Observer {
         if(rondactual!=servidor.getState().getRonda()){
             History(rondactual);//añade una la informacion de la ronda al historial
             cartasusadas = new ArrayList<>();//resetea la lista de las cartas usadas
+            rondactual=servidor.getState().getRonda();
         }
         this.pack.setJugador(jugador);
         Notificador();

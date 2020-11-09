@@ -39,7 +39,7 @@ public class Gameviewcontroller extends Observer {
     private Timer timer;
     private ListaHistory listaHistory;
 
-    private int rondactual = 0;
+    private int rondactual = 1;
     private int turno = 0;
     private int danioataque = 0;
 
@@ -173,7 +173,15 @@ public class Gameviewcontroller extends Observer {
                 @Override
                 public void run() {
                     turno++;
-                    if (turno%2!=0){
+                    if(turno==1){
+                        indicaturnorival.setFill(Color.RED);
+                        indicaturno.setFill(Color.GREEN);
+                        for (Button bot:listacartas) {
+                            bot.setDisable(false);
+                        }
+                    }
+                    if (turno>1&&turno%2!=0){
+                        History(rondactual);
                         rondactual++;//cambia de ronda
                         cartasusadas = new ArrayList<>();//limpia la lista de las cartas utilizadas en la ronda
                         int  mana = jugador.getMana();
@@ -194,9 +202,7 @@ public class Gameviewcontroller extends Observer {
                         for (Button bot:listacartas) {
                             bot.setDisable(true);
                         }
-                        History(rondactual);//envia la información recolectada al historial
                         pack.setDanioeviado(danioataque);
-                        History(rondactual);
                         danioataque = 0;
                         Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
 
@@ -341,8 +347,7 @@ public class Gameviewcontroller extends Observer {
 
             ButtonType ok = new ButtonType("Ok");
             alert.getButtonTypes().setAll(ok);
-            Optional<ButtonType> result = alert.showAndWait();
-
+            alert.showAndWait();
         }
 
         Platform.runLater(()->{

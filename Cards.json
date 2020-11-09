@@ -14,7 +14,7 @@
       "tipo": "Hechizo",
       "imagen": "Congelar.png",
       "coste": 50,
-      "damage": 0
+      "damage": 20
     },
   {
     "id": "Electrocutar",
@@ -55,7 +55,7 @@
     "tipo": "Hechizo",
     "imagen":"Congelar.png" ,
     "coste": 15,
-    "damage": 0
+    "damage": 20
   },
   {
     "id": "Poder_Supremo",
@@ -63,7 +63,7 @@
     "tipo": "Hechizo",
     "imagen":"Congelar.png",
     "coste": 40,
-    "damage": 0
+    "damage": 20
   },
   {
     "id": "Valquiria",
@@ -79,7 +79,7 @@
     "tipo": "Hechizo",
     "imagen": "Congelar.png",
     "coste": 25,
-    "damage": 0
+    "damage": 20
   },
   {
     "id": "Secreto #1",
@@ -87,7 +87,7 @@
     "tipo": "Secreto",
     "imagen":"Congelar.png" ,
     "coste": 25,
-    "damage": 0
+    "damage": 20
   },
   {
     "id": "Dragón",
@@ -111,7 +111,7 @@
     "tipo": "Secreto",
     "imagen":"Congelar.png" ,
     "coste": 25,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Recupera carta",
@@ -119,7 +119,7 @@
     "tipo": "Hechizo",
     "imagen": "Congelar.png",
     "coste": 40,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Secreto #3",
@@ -127,7 +127,7 @@
     "tipo": "Secreto",
     "imagen":"Congelar.png" ,
     "coste": 25,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Arquera",
@@ -151,7 +151,7 @@
     "tipo": "Hechizo",
     "imagen":"Congelar.png" ,
     "coste": 40,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Secreto #4",
@@ -159,7 +159,7 @@
     "tipo": "Secreto",
     "imagen":"Congelar.png" ,
     "coste": 25,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Duende",
@@ -175,7 +175,7 @@
     "tipo": "Secreto",
     "imagen": "Congelar.png",
     "coste": 25,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Minotauro",
@@ -198,7 +198,7 @@
     "tipo": "Secreto",
     "imagen": "Congelar.png",
     "coste": 15,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Secreto #7",
@@ -206,7 +206,7 @@
     "tipo": "Secreto",
     "imagen": "Congelar.png",
     "coste": 30,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Secreto #8",
@@ -214,7 +214,7 @@
     "tipo": "Secreto",
     "imagen": "Congelar.png",
     "coste": 25,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Secreto #9",
@@ -230,7 +230,7 @@
     "tipo": "Secreto",
     "imagen": "Congelar.png",
     "coste": 0,
-    "daño": 0
+    "daño": 20
   },
   {
     "id": "Luz Oscura",
@@ -238,6 +238,6 @@
     "tipo": "Hechizo",
     "imagen": "Congelar.png",
     "coste": 30,
-    "daño": 0
+    "daño": 20
    }
 ]
