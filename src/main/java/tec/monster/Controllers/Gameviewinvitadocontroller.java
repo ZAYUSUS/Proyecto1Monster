@@ -21,6 +21,7 @@ import tec.monster.History.ListaHistory;
 import tec.monster.Observers.Observer;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Timer;
 
 public class Gameviewinvitadocontroller extends Observer {
@@ -31,7 +32,7 @@ public class Gameviewinvitadocontroller extends Observer {
     private ListaHistory listaHistory;
 
     private int rondactual = 1;
-    private int turno = 0;
+    private int turno = 1;
     private int daniorecibido=0;
 
 
@@ -63,7 +64,6 @@ public class Gameviewinvitadocontroller extends Observer {
      * Uploader se encarga de al iniciar la ventana se generén las listas que contienen las cartas del deck y las de la mano
      * para empezar el juego
      */
-
     private void Uploader(){
         this.listacartas = new ArrayList<>();//lista con los botones que conforman la mano
         this.listacartasrival = new ArrayList<>();//lista de botones de la mano rival
@@ -186,8 +186,20 @@ public class Gameviewinvitadocontroller extends Observer {
             principal.getChildren().remove(boton);//remueve el boton de la pantalla
 
             try {
-                hand.Insert(deck.Top());//obtiene la primera carta del Deck
-                deck.Remove(deck.Top().getID());
+                if(!deck.isEmpty()){
+                    hand.Insert(deck.Top());//obtiene la primera carta del Deck
+                    deck.Remove(deck.Top().getID());
+
+                    Button cartanueva = hand.getFirts().getCarta().GenerateButton();
+
+                    listacartas.add(cartanueva);//añade la nueva carta a la lista que contiene los botones de las cartas
+                    cartanueva.setLayoutX(posx);//obtiene la posición del boton anterior
+                    cartanueva.setLayoutY(669);
+                    cartanueva.setOnMouseClicked(mouseEvent -> AccionCarta(cartanueva,hand.getFirts().getCarta()));//le dá la función a realizar cuando se use
+
+                    principal.getChildren().add(cartanueva);//añade el boton a la pantalla
+                    RefreshDeck();
+                }
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("ALERTA!");
@@ -195,16 +207,6 @@ public class Gameviewinvitadocontroller extends Observer {
                 alert.setContentText("No tiene cartas en el Deck");
                 alert.showAndWait();
             }
-            Button cartanueva = hand.getFirts().getCarta().GenerateButton();
-
-            listacartas.add(cartanueva);//añade la nueva carta a la lista que contiene los botones de las cartas
-            cartanueva.setLayoutX(posx);//obtiene la posición del boton anterior
-            cartanueva.setLayoutY(669);
-            cartanueva.setOnMouseClicked(mouseEvent -> AccionCarta(cartanueva,hand.getFirts().getCarta()));//le dá la función a realizar cuando se use
-
-            principal.getChildren().add(cartanueva);//añade el boton a la pantalla
-            RefreshDeck();
-
             Eventselector(carta);
 
             int mana = jugador.getMana();
@@ -268,6 +270,9 @@ public class Gameviewinvitadocontroller extends Observer {
         cartasusadas = new ArrayList<>();
         listaHistory = new ListaHistory();
         principal.getChildren().add(listaHistory.getMenu());
+
+        indicaturnorival.setFill(Color.GREEN);
+        indicaturno.setFill(Color.RED);
     }
 
     /***
@@ -276,25 +281,40 @@ public class Gameviewinvitadocontroller extends Observer {
     @Override
     public void update() {
         jugador.setLife(jugador.getLife()-servidor.getState().getDanioeviado());//le resta el daño enviado por el oponente a la vida actual
-        daniorecibido+=servidor.getState().getDanioeviado();//suma el daño que se recibio al contador de daño global
+        daniorecibido+=servidor.getState().getDanioeviado();//suma el daño que se recibio al contador de daño
+
         Platform.runLater(()->{//se encarga de actualizar la información que se encuentra en pantalla
             pvida.setText(Integer.toString(jugador.getLife()));
             pmanarival.setText(Integer.toString(servidor.getState().getJugador().getMana()));
             pvidarival.setText(Integer.toString(servidor.getState().getJugador().getLife()));
             numronda.setText(Integer.toString(servidor.getState().getRonda()));
-            rondactual=servidor.getState().getRonda();
-        });//genera el cambio visual de la vida
+        });//genera el cambio visual de la vida y los demás parametros
 
+
+        if(jugador.getLife()<=0){//si tiene la vida en negativo o es cero se cierra el progrma y se acaba la partida
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);//alerta que slata al perder
+            alert.setTitle("GRACIAS POR JUGAR");
+            alert.setContentText("ADIOS");
+
+            ButtonType ok = new ButtonType("Ok");
+            alert.getButtonTypes().setAll(ok);
+            Optional<ButtonType> result = alert.showAndWait();
+
+        }
         //indica que se cambio la ronda
-        if(servidor.getState().getTurno()%2==0){
+        if(servidor.getState().getTurno()%2==0){//si el turno es par
             indicaturnorival.setFill(Color.RED);
             indicaturno.setFill(Color.GREEN);
             for (Button bot:listacartas) {
                 bot.setDisable(false);
             }
-            this.pack.setDanioeviado(danioataque);
+            this.pack.setDanioeviado(danioataque);// envia el daño generado en la ronda
+            Platform.runLater(()->pvidarival.setText(Integer.toString(servidor.getState().getJugador().getLife()-danioataque)));
             danioataque=0;
-            Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
+            Platform.runLater(()-> {
+                idanio.setText(Integer.toString(danioataque));
+            });
+
         }else{//si el turno no es par
             indicaturnorival.setFill(Color.GREEN);
             indicaturno.setFill(Color.RED);
@@ -307,11 +327,11 @@ public class Gameviewinvitadocontroller extends Observer {
             }else{
                 jugador.setMana(mana+50);
             }
-            Platform.runLater(()->pmana.setText(Integer.toString(jugador.getMana())));
+            Platform.runLater(()->pmana.setText(Integer.toString(jugador.getMana())));//cambia la informacion dle mana en pantalla
         }
-        if (rondactual!=servidor.getState().getRonda()){//si la ronda cambio se agrega el historial
-            History(rondactual);
-            cartasusadas = new ArrayList<>();
+        if(rondactual!=servidor.getState().getRonda()){
+            History(rondactual);//añade una la informacion de la ronda al historial
+            cartasusadas = new ArrayList<>();//resetea la lista de las cartas usadas
         }
         this.pack.setJugador(jugador);
         Notificador();

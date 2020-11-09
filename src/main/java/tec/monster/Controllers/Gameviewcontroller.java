@@ -14,15 +14,14 @@ import tec.monster.Connections.Server;
 import javafx.fxml.FXML;
 import tec.monster.Game.Cards;
 import tec.monster.DeckStructure.Deck;
-import tec.monster.Game.Handcontrol;
 import tec.monster.Game.Player;
 import tec.monster.HandStructure.Hand;
 import tec.monster.HandStructure.Handnode;
 import tec.monster.History.ListaHistory;
-import tec.monster.History.NodoHistory;
 import tec.monster.Observers.Observer;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -77,10 +76,8 @@ public class Gameviewcontroller extends Observer {
     private void Uploader(){
         this.listacartas = new ArrayList<>();//lista con los botones que conforman la mano
         this.listacartasrival = new ArrayList<>();//lista de botones de la mano rival
-
         try {
             RefreshDeck();
-
             Handnode caux = hand.getFirts();
             Handnode raux = rivalhand.getFirts();
             int contador = 0;
@@ -178,7 +175,6 @@ public class Gameviewcontroller extends Observer {
                     turno++;
                     if (turno%2!=0){
                         rondactual++;//cambia de ronda
-                        History(rondactual);//envia la información recolectada al historial
                         cartasusadas = new ArrayList<>();//limpia la lista de las cartas utilizadas en la ronda
                         int  mana = jugador.getMana();
                         if(mana+50>200){
@@ -198,6 +194,7 @@ public class Gameviewcontroller extends Observer {
                         for (Button bot:listacartas) {
                             bot.setDisable(true);
                         }
+                        History(rondactual);//envia la información recolectada al historial
                         pack.setDanioeviado(danioataque);
                         History(rondactual);
                         danioataque = 0;
@@ -245,8 +242,20 @@ public class Gameviewcontroller extends Observer {
             listacartas.remove(boton);//remueve el boton de la pantalla
             principal.getChildren().remove(boton);//remueve el boton de la pantalla
             try {
-                hand.Insert(deck.Top());//obtiene la primera carta del Deck y la inserta a la mano
-                deck.Remove(deck.Top().getID());
+                if(!deck.isEmpty()){
+                    hand.Insert(deck.Top());//obtiene la primera carta del Deck
+                    deck.Remove(deck.Top().getID());
+
+                    Button cartanueva = hand.getFirts().getCarta().GenerateButton();
+
+                    listacartas.add(cartanueva);//añade la nueva carta a la lista que contiene los botones de las cartas
+                    cartanueva.setLayoutX(posx);//obtiene la posición del boton anterior
+                    cartanueva.setLayoutY(669);
+                    cartanueva.setOnMouseClicked(mouseEvent -> AccionCarta(cartanueva,hand.getFirts().getCarta()));//le dá la función a realizar cuando se use
+
+                    principal.getChildren().add(cartanueva);//añade el boton a la pantalla
+                    RefreshDeck();
+                }
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("ALERTA!");
@@ -254,26 +263,14 @@ public class Gameviewcontroller extends Observer {
                 alert.setContentText("No tiene cartas en el Deck");
                 alert.showAndWait();
             }
-            System.out.println("Final etapa de calibración''''''''''''''''''''''''''''''");
 
-            Button cartanueva = hand.getFirts().getCarta().GenerateButton();
-            listacartas.add(cartanueva);//añade la nueva carta a la lista que contiene los botones de las cartas
-            cartanueva.setLayoutX(posx);//obtiene la posición del boton anterior
-            cartanueva.setLayoutY(669);
-            cartanueva.setOnMouseClicked(mouseEvent -> AccionCarta(cartanueva,hand.getFirts().getCarta()));//le dá la función a realizar cuando se use
-            principal.getChildren().add(cartanueva);//añade el boton a la pantalla
-            RefreshDeck();
-
-
-            System.out.println("Se refreco el deck correctamente--------------------------");
 
             Eventselector(carta);// verifica el tipo de carta para seleccionar el evento asociado
 
-            int mana = jugador.getMana();
-            jugador.setMana(mana-carta.getCoste());
-            pmana.setText(Integer.toString(jugador.getMana()));
-            this.pack.setJugador(jugador);
-            //hand.Remove(carta.getID());//se saca la carta de la mano
+            int mana = jugador.getMana();//obtiene el mana actual del jugador
+            jugador.setMana(mana-carta.getCoste());//le cambia el mana en el interno al jugador
+            pmana.setText(Integer.toString(jugador.getMana()));//cambia la cantidad de mana en el mostrador
+            this.pack.setJugador(jugador);//envia la informacion del jugador
             Notificador();
         }else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -322,7 +319,7 @@ public class Gameviewcontroller extends Observer {
      * Método que crea un cliente uy envía los eventos que suceden en la ronda
      */
     public void Notificador(){
-        Client cliente = new Client(this.pack);
+        Client cliente = new Client(this.pack);//envia la calse paquete con la informacion cambiada
         Thread hilo = new Thread(cliente);
         hilo.start();
     }
@@ -334,8 +331,20 @@ public class Gameviewcontroller extends Observer {
      */
     @Override
     public void update() {//esto solo lo usa la ventana que se abrio derivada de el invitado
-        jugador.setLife(jugador.getLife()-servidor.getState().getDanioeviado());
+        jugador.setLife(jugador.getLife()-servidor.getState().getDanioeviado());//si se recibe daño se baja lavida del jugador y se cambia el indicador de vida
         daniorecibido+=servidor.getState().getDanioeviado();
+
+        if(jugador.getLife()<0){//si tiene la vida en negativo o es cero se cierra el progrma y se acaba la partida
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);//alerta que slata al perder
+            alert.setTitle("GRACIAS POR JUGAR");
+            alert.setContentText("ADIOS");
+
+            ButtonType ok = new ButtonType("Ok");
+            alert.getButtonTypes().setAll(ok);
+            Optional<ButtonType> result = alert.showAndWait();
+
+        }
+
         Platform.runLater(()->{
             pvida.setText(Integer.toString(jugador.getLife()));
             pmanarival.setText(Integer.toString(servidor.getState().getJugador().getMana()));
