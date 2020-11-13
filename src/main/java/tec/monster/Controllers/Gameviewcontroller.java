@@ -333,7 +333,8 @@ public class Gameviewcontroller extends Observer {
     public void CheckLife(){
         if(jugador.getLife()<0){//si tiene la vida en negativo o es cero se cierra el progrma y se acaba la partida
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);//alerta que slata al perder
-            alert.setTitle("GRACIAS POR JUGAR");
+            alert.setTitle("Game Over");
+            alert.setHeaderText("GRACIAS POR JUGAR");
             alert.setContentText("ADIOS");
 
             ButtonType ok = new ButtonType("Ok");
