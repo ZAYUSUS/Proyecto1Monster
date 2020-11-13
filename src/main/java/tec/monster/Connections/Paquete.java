@@ -18,6 +18,8 @@ public class Paquete implements Serializable {
     int turno;
     int danioeviado;
 
+    boolean estado  = true;
+
 
     String Ip;
     String usuario;
@@ -70,6 +72,9 @@ public class Paquete implements Serializable {
     public Cards getCarta() {
         return carta;
     }
+    public Boolean getEstado(){
+        return estado;
+    }
 
     public void setPuerto(int puerto) {
         this.puerto = puerto;
@@ -105,6 +110,10 @@ public class Paquete implements Serializable {
 
     public void setTurno(int turno) {
         this.turno = turno;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public void setDanioeviado(int danioeviado) {

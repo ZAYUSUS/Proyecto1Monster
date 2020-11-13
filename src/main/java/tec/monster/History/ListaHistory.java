@@ -8,6 +8,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import tec.monster.Connections.Paquete;
 
+
+/***
+ * Clase que se encarga de generar el historial donde se guardan la información de la
+ * partida
+ * author Bryan
+ */
 public class ListaHistory {
     private NodoHistory first;
     private NodoHistory data;
@@ -45,19 +51,6 @@ public class ListaHistory {
             }
         }
         Platform.runLater(()->menu.getItems().add(nuevo.getVisual()));
-    }
-    public MenuButton Agregar(){
-        NodoHistory p = first;
-        if (first == null) {
-            System.out.println("No hay elementos en la lista");
-        } else {
-            while (p != null) {
-                MenuItem item = p.getVisual();
-                Platform.runLater(()->menu.getItems().add(item));
-                p = p.getNext();
-            }
-        }
-        return  menu;
     }
     public MenuButton getMenu(){
         return  menu;

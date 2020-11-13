@@ -15,4 +15,6 @@ module tec.monster {
     exports tec.monster.Connections;
     opens tec.monster.Game to javafx.fxml;
     exports tec.monster.Game;
+    opens tec.monster.HandStructure;
+    exports tec.monster.HandStructure;
 }

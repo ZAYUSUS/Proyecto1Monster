@@ -1,5 +1,8 @@
 package tec.monster.Connections;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import tec.monster.Jsonconf.Json;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;

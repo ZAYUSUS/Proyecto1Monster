@@ -22,6 +22,11 @@ public class Hand implements Serializable {
         return this.firts;
     }
 
+    /**
+     * Método que verifica si la lista tienen elementos o no
+     * @return true si está vacía la lista
+     */
+
     public boolean isEmpty(){return firts==null;}
     /**
      * Método para insertar nodos
@@ -32,7 +37,7 @@ public class Hand implements Serializable {
         Handnode nuevo = new Handnode();
         nuevo.setCarta(carta);
 
-        if (this.firts==null){
+        if (isEmpty()){
             firts = nuevo;
             firts.setNext(firts);
             firts.setPrevious(firts);
@@ -42,7 +47,9 @@ public class Hand implements Serializable {
             nuevo.setNext(firts);
             nuevo.setPrevious(firts.getPrevious());
             firts.setPrevious(nuevo);
+            nuevo.getPrevious().setNext(nuevo);
             nuevo.previous.next = nuevo;
+
             firts=nuevo;
         }
         size++;
@@ -52,6 +59,7 @@ public class Hand implements Serializable {
      * Metodo que busca una carta por su Id
      * param id es el nombre de la carta a buscar
      */
+    /*
     public Cards Search(String id){
         boolean state = false;
         Handnode aux = firts;
@@ -71,26 +79,8 @@ public class Hand implements Serializable {
             return null;
         }
     }
-
-    /***
-     * Método para eliminar una carta de la lista por su Id
-     *
      */
-    public void Remove(String id){
-        Handnode aux = firts;
 
-        if(aux != null){
-            while (aux.getNext() != firts){
-                if(aux.getCarta().getID().equals(id)){
-                    firts.next.previous = aux.getPrevious();
-                    firts.previous.next = aux.getNext();
-                    firts = firts.getNext();
-                    size--;
-                }
-                aux = aux.getNext();
-            }
-        }
-    }
     /***
      * Muestra los Id de las cartas en la lista
      */

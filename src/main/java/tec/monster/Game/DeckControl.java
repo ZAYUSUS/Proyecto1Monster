@@ -3,7 +3,6 @@ package tec.monster.Game;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tec.monster.DeckStructure.Deck;
-import tec.monster.HandStructure.Hand;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -35,6 +34,11 @@ public class DeckControl {
             System.out.println("Ocurrió un error al cargar el archivo json");
         }
     }
+
+    /**
+     *
+     * @return un objeto de tipo Deck con las cartas revueltas
+     */
 
     public Deck GenerateDeck() {
         Collections.shuffle(this.cartas);

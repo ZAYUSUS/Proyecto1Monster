@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import tec.monster.Connections.Client;
 import tec.monster.Connections.Paquete;
 import tec.monster.Connections.Server;
@@ -25,6 +26,8 @@ import java.util.Optional;
 import java.util.Timer;
 
 public class Gameviewinvitadocontroller extends Observer {
+    private Stage vista;
+
     private Server servidor;
     private Deck deck;
     private Hand hand,rivalhand;
@@ -53,8 +56,6 @@ public class Gameviewinvitadocontroller extends Observer {
     private Circle indicaturnorival,indicaturno;
     @FXML
     private Button ideck;
-    @FXML
-    private Pane campojuego,cartasoponente;
     @FXML
     private AnchorPane principal;
     @FXML
@@ -138,6 +139,8 @@ public class Gameviewinvitadocontroller extends Observer {
     public void setDeck(Deck deck) { this.deck = deck; }
     public void setHand(Hand hand) { this.hand = hand; }
     public void setRivalhand(Hand rivalhand) { this.rivalhand = rivalhand;}
+    public void setVista(Stage vista) { this.vista = vista; }
+
     /***
      * M'etodo que se encarga de refrescar la imagen de la carta que está en la primera posición del deck en pantalla
      */
@@ -231,22 +234,10 @@ public class Gameviewinvitadocontroller extends Observer {
      */
     public void Eventselector(Cards carta){
         String tipo = carta.getTipo();
-        String Id = carta.getID();
-        switch (tipo){
-            case "Esbirro":
-                int danio = carta.getDamage();
-                danioataque+=danio;//le suma el danio de la carta a el daño que se enviará a final de cada turno.
-                Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
-                break;
-            case "Hechizo":
-                System.out.println("es un hechizo");
-                break;
-            case "Secreto":
-                System.out.println("Es un secreto");
-                break;
-        }
-
-
+        //String Id = carta.getID();
+        int danio = carta.getDamage();
+        danioataque+=danio;
+        Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
 
     }
     /***
@@ -257,6 +248,30 @@ public class Gameviewinvitadocontroller extends Observer {
         Thread hilo = new Thread(cliente);
         hilo.start();
     }
+    /**
+     * Método encargado de cerrar el programa una vez la vida llegue a 0.
+     */
+    public void CheckLife(){
+        if(jugador.getLife()<0){//si tiene la vida en negativo o es cero se cierra el progrma y se acaba la partida
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);//alerta que slata al perder
+            alert.setTitle("GRACIAS POR JUGAR");
+            alert.setContentText("ADIOS");
+
+            ButtonType ok = new ButtonType("Ok");
+            alert.getButtonTypes().setAll(ok);
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == ButtonType.OK){
+                this.pack.setEstado(false);
+                Notificador();
+                vista.close();
+                Platform.exit();
+                System.exit(0);
+            }
+
+        }
+    }
+
 
     /**
      * Su función es la de correr el método encargado de dar las cartas iniciales y formar el deck
@@ -280,26 +295,20 @@ public class Gameviewinvitadocontroller extends Observer {
      */
     @Override
     public void update() {
+        if(servidor.getState().getEstado()==false){
+            CheckLife();
+        }
         jugador.setLife(jugador.getLife()-servidor.getState().getDanioeviado());//le resta el daño enviado por el oponente a la vida actual
         daniorecibido+=servidor.getState().getDanioeviado();//suma el daño que se recibio al contador de daño
 
         Platform.runLater(()->{//se encarga de actualizar la información que se encuentra en pantalla
+            CheckLife();
             pvida.setText(Integer.toString(jugador.getLife()));
             pmanarival.setText(Integer.toString(servidor.getState().getJugador().getMana()));
             pvidarival.setText(Integer.toString(servidor.getState().getJugador().getLife()));
             numronda.setText(Integer.toString(servidor.getState().getRonda()));
         });//genera el cambio visual de la vida y los demás parametros
 
-
-        if(jugador.getLife()<=0){//si tiene la vida en negativo o es cero se cierra el progrma y se acaba la partida
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);//alerta que slata al perder
-            alert.setTitle("GRACIAS POR JUGAR");
-            alert.setContentText("ADIOS");
-
-            ButtonType ok = new ButtonType("Ok");
-            alert.getButtonTypes().setAll(ok);
-            alert.showAndWait();
-        }
         //indica que se cambio la ronda
         if(servidor.getState().getTurno()%2==0){//si el turno es par
             indicaturnorival.setFill(Color.RED);

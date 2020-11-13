@@ -116,6 +116,7 @@ public class Invitadocontroller extends Observer implements Initializable {
         gamecont.setServer(servidor);
         gamecont.setNickname(nickname);
         gamecont.setPack(pack);
+        gamecont.setVista(Gameview);
         gamecont.Start();
         Gameview.show();
         Gameview.setOnCloseRequest(new EventHandler<WindowEvent>() {

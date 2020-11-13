@@ -8,6 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import tec.monster.Connections.Client;
 import tec.monster.Connections.Paquete;
 import tec.monster.Connections.Server;
@@ -33,6 +35,8 @@ import java.util.TimerTask;
  */
 
 public class Gameviewcontroller extends Observer {
+    private Stage vista;
+
     private Server servidor;
     private Deck deck;
     private Hand hand,rivalhand;
@@ -66,6 +70,7 @@ public class Gameviewcontroller extends Observer {
     private Pane campojuego,cartasoponente;
     @FXML
     private AnchorPane principal;
+
 
 
     /**
@@ -162,6 +167,9 @@ public class Gameviewcontroller extends Observer {
     public void setDeck(Deck deck) { this.deck = deck; }
     public void setHand(Hand hand) { this.hand = hand; }
     public void setRivalhand(Hand rivalhand) { this.rivalhand = rivalhand;}
+    public void setVista(Stage vista) {
+        this.vista = vista;
+    }
 
     /***
      * Método que lleva el conteo de las rondas, cada turno dura 15 segundos, cada dos
@@ -291,21 +299,11 @@ public class Gameviewcontroller extends Observer {
      * Método que indica cuál eventos sucederá según el tipo de la carta y su ID
      */
     public void Eventselector(Cards carta){
-        String tipo = carta.getTipo();
-        String Id = carta.getID();
-        switch (tipo){
-            case "Esbirro":
-                int danio = carta.getDamage();
-                danioataque+=danio;
-                Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
-                break;
-            case "Hechizo":
-                System.out.println("es un hechizo");
-                break;
-            case "Secreto":
-                System.out.println("Es un secreto");
-                break;
-        }
+        //String tipo = carta.getTipo();
+        //String Id = carta.getID();
+        int danio = carta.getDamage();
+        danioataque+=danio;
+        Platform.runLater(()->idanio.setText(Integer.toString(danioataque)));
     }
     /**
      * Su función es la de correr el método encargado de dar las cartas iniciales y formar el deck
@@ -329,17 +327,10 @@ public class Gameviewcontroller extends Observer {
         Thread hilo = new Thread(cliente);
         hilo.start();
     }
-
     /**
-     * Método que se implemeta ya que la clase GameviewController es un observador y cada vez que
-     * el server envía información la ventana se actualiza.
-     *
+     * Método encargado de cerrar el programa una vez la vida llegue a 0.
      */
-    @Override
-    public void update() {//esto solo lo usa la ventana que se abrio derivada de el invitado
-        jugador.setLife(jugador.getLife()-servidor.getState().getDanioeviado());//si se recibe daño se baja lavida del jugador y se cambia el indicador de vida
-        daniorecibido+=servidor.getState().getDanioeviado();
-
+    public void CheckLife(){
         if(jugador.getLife()<0){//si tiene la vida en negativo o es cero se cierra el progrma y se acaba la partida
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);//alerta que slata al perder
             alert.setTitle("GRACIAS POR JUGAR");
@@ -347,10 +338,33 @@ public class Gameviewcontroller extends Observer {
 
             ButtonType ok = new ButtonType("Ok");
             alert.getButtonTypes().setAll(ok);
-            alert.showAndWait();
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == ButtonType.OK){
+                this.pack.setEstado(false);
+                Notificador();
+                vista.close();
+                Platform.exit();
+                System.exit(0);
+            }
         }
+    }
+    /**
+     * Método que se implemeta ya que la clase GameviewController es un observador y cada vez que
+     * el server envía información la ventana se actualiza.
+     *
+     */
+    @Override
+    public void update() {//esto solo lo usa la ventana que se abrio derivada de el invitado
+        if(servidor.getState().getEstado()==false){
+            CheckLife();
+        }
+        jugador.setLife(jugador.getLife()-servidor.getState().getDanioeviado());//si se recibe daño se baja lavida del jugador y se cambia el indicador de vida
+        daniorecibido+=servidor.getState().getDanioeviado();
 
         Platform.runLater(()->{
+            CheckLife();
             pvida.setText(Integer.toString(jugador.getLife()));
             pmanarival.setText(Integer.toString(servidor.getState().getJugador().getMana()));
             pvidarival.setText(Integer.toString(servidor.getState().getJugador().getLife()));

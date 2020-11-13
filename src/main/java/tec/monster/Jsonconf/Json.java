@@ -1,14 +1,20 @@
 package tec.monster.Jsonconf;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
+import tec.monster.Connections.Paquete;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringWriter;
 
 /**
  * Clase utilizada para serializar y deserializar clases en strings y volverlos
  * a objetos de Jva
  */
 
-public class Json {
+public class Json implements Serializable {
     private static ObjectMapper objectMapper = getDefaultObjectMapper();
+    private static StringWriter escritor = new StringWriter();
 
     private static ObjectMapper getDefaultObjectMapper(){
         ObjectMapper defaultObjectMapper = new ObjectMapper();
@@ -34,11 +40,12 @@ public class Json {
      * @return una clase según se le haya indicado
      * @throws JsonProcessingException
      */
-    public static <A> A fromJson(JsonNode node, Class<A> aClass) throws JsonProcessingException{
-        return objectMapper.treeToValue(node,aClass);
+    public static Paquete fromJson(String nodo) throws JsonProcessingException{
+        return objectMapper.readValue(nodo,Paquete.class);
     }
-    public static JsonNode toJson(Object a){
+    public static String toJson(Paquete a) throws IOException {
+        String paqt = objectMapper.writeValueAsString(a);
+        return paqt;
+    }
 
-        return objectMapper.valueToTree(a);
-    }
 }

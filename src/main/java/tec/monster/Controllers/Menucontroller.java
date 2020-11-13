@@ -1,5 +1,6 @@
 package tec.monster.Controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -99,10 +100,9 @@ public class Menucontroller implements Initializable {
         this.viewAnfitrion.show();
         this.viewAnfitrion.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
+                stage.show();
                 Server servidor = anfitrioncont.getServidor();
                 servidor.close();
-                stage.show();
-
             }
         });
     }

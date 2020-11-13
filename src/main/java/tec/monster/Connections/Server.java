@@ -1,5 +1,7 @@
 package tec.monster.Connections;
+import com.fasterxml.jackson.databind.JsonNode;
 import tec.monster.Game.Cards;
+import tec.monster.Jsonconf.Json;
 import tec.monster.Observers.Subject;
 
 import java.io.IOException;
@@ -110,7 +112,6 @@ public class Server extends Subject implements Runnable {
     @Override
     public void run() {
         ObjectInputStream input;
-        ObjectOutputStream out;
 
         Socket conexion = null;
         try {
@@ -122,6 +123,7 @@ public class Server extends Subject implements Runnable {
 
                 input = new ObjectInputStream(conexion.getInputStream());
                 paquete = (Paquete) input.readObject();
+
 
                 this.setState(paquete);
 
